@@ -5,7 +5,7 @@ export class BoardSmall {
 
   private readonly tiles: Tile[];
 
-  constructor(players: number) {
+  constructor() {
     this.tiles = Array(BoardSmall.AmountTiles).fill(new Tile(null));
   }
 }
