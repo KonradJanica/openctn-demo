@@ -1,7 +1,7 @@
 import {Tile} from './tile'
 
 export class BoardLarge {
-  static readonly AmountTiles = 19;
+  static readonly AmountTiles = 30;
 
   private readonly tiles: Tile[];
 
