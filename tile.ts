@@ -1,3 +1,5 @@
+import {Land} from './land';
+
 export enum TileType {
   DESERT,
   GRAIN,
@@ -7,12 +9,17 @@ export enum TileType {
   BRICK,
 }
 
+export interface TileParams {
+  tileType: TileType;
+  landList: Land[];
+}
+
 export class Tile {
   readonly tileType : TileType;
+  private readonly landList : Land[];
 
-  constructor(tileType : TileType) {
-    this.tileType = tileType;
+  constructor(tileParams: TileParams) {
+    this.tileType = tileParams.tileType;
+    this.landList = tileParams.landList; 
   }
-
-
 };
