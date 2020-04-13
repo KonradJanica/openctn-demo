@@ -34,7 +34,11 @@ export class DevelopmentDeck {
     return this.currentPos >= this.deck.length;
   }
 
-  GetNext(): CardType {
+  GetNext(): CardType | undefined {
+    if (this.IsEmpty()) {
+      return undefined;
+    }
+
     return this.deck[this.currentPos++];
   }
 };
