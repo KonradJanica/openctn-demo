@@ -1,6 +1,7 @@
+import * as React from "react";
+
 import {IBoard} from './board-interface';
-import {Tile} from './tile'
-import React from "react";
+import Tile, {TileType} from './tile'
 
 export default class BoardSmall extends React.Component implements IBoard {
   static readonly AmountTiles = 19;
@@ -37,14 +38,14 @@ export default class BoardSmall extends React.Component implements IBoard {
   }
 
   render() {
-    return this.tiles.map((val, i) => {
-      const posStyle = {
-        position: 'absolute',
-        top: val.yPos,
-        left: val.xPos,
-      };
-      return <div style={posStyle}>{i}</div>;
-    });
+    return (this.tiles.map((val, i) => {
+      return <Tile 
+        xPos={val.xPos} 
+        yPos={val.yPos}
+        tileType={TileType.WOOL}
+        />
+      })
+    );
   }
   
   /** @implements */

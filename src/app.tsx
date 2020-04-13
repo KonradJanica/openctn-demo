@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import BoardSmall from './board-small';
 
 export default class App extends React.Component {
