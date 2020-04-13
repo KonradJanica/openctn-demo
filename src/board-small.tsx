@@ -2,13 +2,15 @@ import {IBoard} from './board-interface';
 import {TileType, TileParams, Tile} from './tile'
 import {TileEdge} from './tile-edge'
 import {TileCorner} from './tile-corner'
+import React from "react";
 
-export class BoardSmall implements IBoard {
+export default class BoardSmall extends React.Component implements IBoard {
   static readonly AmountTiles = 19;
 
   private readonly tiles: Tile[];
 
-  constructor() {
+  constructor(props) {
+    super(props)
     this.tiles = [];
     this.generateMap();
     this.positionTiles();
@@ -121,13 +123,16 @@ export class BoardSmall implements IBoard {
   }
 
   render() {
-    return this.tiles.map(function (val, i) {
-      return `<div style="position:absolute;top:${val.yPos}px;left:${val.xPos}px;">
-        ${i}
-      </div>`;
-    }).join("");
+    return this.tiles.map((val, i) => {
+      const posStyle = {
+        position: 'absolute',
+        top: val.yPos,
+        left: val.xPos,
+      };
+      return <div style={posStyle}>{i}</div>;
+    });
   }
-
+  
   /** @implements */
   GetTiles() {
     return this.tiles;

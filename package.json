@@ -3,7 +3,7 @@
 	"version": "0.0.0",
 	"description": "generate js bundle from typescript",
 	"scripts": {
-		"generate": "browserify -p tsify -t [ babelify --extensions .ts ] src/main.ts > public/bundle.js"
+		"generate": "browserify -p tsify -t [ babelify --extensions .ts,.tsx ] src/index.tsx > public/bundle.js"
 	},
 	"author": "Konrad Janica <konradjanica@gmail.com> (http://github.com/konradjanica)",
 	"license": "MIT",
@@ -14,5 +14,9 @@
 		"browserify": "^16.5.1",
 		"tsify": "^4.0.1",
 		"typescript": "^3.8.3"
+	},
+	"dependencies": {
+		"react": "^16.13.1",
+		"react-dom": "^16.13.1"
 	}
 }
