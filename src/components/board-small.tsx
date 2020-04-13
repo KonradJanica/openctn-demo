@@ -1,6 +1,8 @@
 import * as React from "react";
+
 import * as Components from "./components"
 import * as Models from "../models/models"
+import {TileType} from "../models/tile"
 
 export default class BoardSmall extends React.Component {
   static readonly AmountTiles = 19;
@@ -17,7 +19,7 @@ export default class BoardSmall extends React.Component {
       return <Components.Tile 
         xPos={val.xPos} 
         yPos={val.yPos}
-        tileType={Models.TileType.WOOL}
+        tileType={TileType.WOOL}
         />
       })
     );

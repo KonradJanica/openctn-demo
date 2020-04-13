@@ -3,12 +3,12 @@ import {TileEdge} from './tile-edge';
 import {assert} from '../util/error';
 
 export enum TileType {
-  DESERT,
-  GRAIN,
-  LUMBER,
-  WOOL,
-  ORE,
-  BRICK,
+  DESERT = "desert",
+  GRAIN = "grain",
+  LUMBER = "lumber",
+  WOOL = "wool",
+  ORE = "ore",
+  BRICK = "brick",
 }
 
 export interface TileParams {
@@ -18,8 +18,8 @@ export interface TileParams {
 }
 
 export class Tile {
-  static readonly Height = 100;
-  static readonly Width = 100;
+  static readonly Height = 158;
+  static readonly Width = 188;
 
   // Game properties.
   readonly tileType : TileType;
