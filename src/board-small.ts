@@ -14,54 +14,26 @@ export class BoardSmall {
   }
 
   positionTiles() {
-    let xPos = Tile.Width;
     let yPos = 0;
+    let rowEnd = 0;
     let i = 0;
-    let j = 3
-    for (; i < j; ++i) {
-      xPos += Tile.Width;
-      this.tiles[i].xPos = xPos;
-      this.tiles[i].yPos = yPos;
-    }
-
-    xPos = Tile.Width / 2;
-    yPos += Tile.Height;
-    j += 4;
-    for (; i < j; ++i) {
-      xPos += Tile.Width;
-      this.tiles[i].xPos = xPos;
-      this.tiles[i].yPos = yPos;
-    }
-
-    xPos = 0;
-    yPos += Tile.Height;
-    j += 5;
-    for (; i < j; ++i) {
-      xPos += Tile.Width;
-      this.tiles[i].xPos = xPos;
-      this.tiles[i].yPos = yPos;
-    }
-
-    xPos = Tile.Width / 2;
-    yPos += Tile.Height;
-    j += 4;
-    for (; i < j; ++i) {
-      xPos += Tile.Width;
-      this.tiles[i].xPos = xPos;
-      this.tiles[i].yPos = yPos;
-    }
-
-    xPos = Tile.Width;
-    yPos += Tile.Height;
-    j += 3;
-    for (; i < j; ++i) {
-      xPos += Tile.Width;
-      this.tiles[i].xPos = xPos;
-      this.tiles[i].yPos = yPos;
-    }
+    [[Tile.Width, 3],
+     [Tile.Width / 2, 4],
+     [0, 5],
+     [Tile.Width / 2, 4],
+     [Tile.Width, 3]].forEach((val) => {
+       let xPos = val[0];
+       rowEnd += val[1];
+       for (; i < rowEnd; ++i) {
+         this.tiles[i].xPos = xPos;
+         this.tiles[i].yPos = yPos;
+         xPos += Tile.Width;
+       }
+       yPos += Tile.Height;
+     });
   }
 
-  drawTiles() {
+  render() {
     return this.tiles.map(function (val, i) {
       return `<div style="position:absolute;top:${val.yPos}px;left:${val.xPos}px;">
         ${i}
