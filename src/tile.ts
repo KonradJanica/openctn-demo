@@ -15,11 +15,17 @@ export interface TileParams {
 }
 
 export class Tile {
+  static readonly Height = 50;
+  static readonly Width = 50;
+
   readonly tileType : TileType;
   private readonly landList : Land[];
 
+  public xPos : number;
+  public yPos : number;
+
   constructor(tileParams: TileParams) {
-    this.tileType = tileParams.tileType;
-    this.landList = tileParams.landList; 
+    // this.tileType = tileParams.tileType;
+    // this.landList = tileParams.landList; 
   }
 };

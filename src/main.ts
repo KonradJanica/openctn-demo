@@ -1,4 +1,4 @@
-import Greeter from './Greeter';
+import { BoardSmall } from './board-small';
 
-const greeter = new Greeter("Hello, world!");
-document.body.innerHTML = greeter.greet();
+const board = new BoardSmall();
+document.body.innerHTML = board.drawTiles();
