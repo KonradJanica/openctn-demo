@@ -25,7 +25,7 @@ export class Tile {
 
   constructor(tileType: TileType) {
     this.tileType = tileType;
-    this.tileCornerList.fill
+    // this.tileCornerList.fill
     // this.tileType = tileParams.tileType;
     // this.landList = tileParams.landList; 
   }
