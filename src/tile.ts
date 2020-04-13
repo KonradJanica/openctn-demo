@@ -1,5 +1,6 @@
 import {TileCorner} from './tile-corner';
 import {TileEdge} from './tile-edge';
+import {assert} from './util/error';
 
 export enum TileType {
   DESERT,
@@ -10,23 +11,30 @@ export enum TileType {
   BRICK,
 }
 
+export interface TileParams {
+  tileType: TileType;
+  cornerList: TileCorner[];
+  edgeList: TileEdge[];
+}
+
 export class Tile {
   static readonly Height = 50;
   static readonly Width = 50;
 
   // Game properties.
   readonly tileType : TileType;
-  private tileCornerList : TileCorner[];
-  private tileEdgeList : TileEdge[];
+  readonly corners: TileCorner[];
+  readonly edges: TileEdge[];
 
   // Render properties.
   public xPos : number;
   public yPos : number;
 
-  constructor(tileType: TileType) {
-    this.tileType = tileType;
-    this.tileCornerList.fill
-    // this.tileType = tileParams.tileType;
-    // this.landList = tileParams.landList; 
+  constructor(params: TileParams) {
+    this.tileType = params.tileType;
+    assert(params.cornerList.length == 6, "Number of corners must be 6.")
+    assert(params.edgeList.length == 6, "Number of edges must be 6.")
+    this.corners = params.cornerList;
+    this.edges = params.edgeList;
   }
 };
