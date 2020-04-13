@@ -11,8 +11,8 @@ export enum TileType {
 }
 
 export class Tile {
-  static readonly Height = 50;
-  static readonly Width = 50;
+  static readonly Height = 100;
+  static readonly Width = 100;
 
   // Game properties.
   readonly tileType : TileType;
