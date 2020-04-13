@@ -1,5 +1,5 @@
-import {IBoard} from './board-interface';
-import {Player} from './player';
+import {IBoard} from './models/board-interface';
+import {Player} from './models/player';
 
 export interface SetupParams {
   // The currently uninitialized board.

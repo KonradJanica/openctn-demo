@@ -1,4 +1,4 @@
-import Tile from './tile';
+import {Tile} from './tile';
 
 export interface IBoard {
   // TODO: This is enabled for testing. Come up with better API.

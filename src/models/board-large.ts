@@ -1,5 +1,5 @@
 import {IBoard} from './board-interface';
-import Tile from './tile'
+import {Tile} from './tile'
 
 export class BoardLarge implements IBoard {
   static readonly AmountTiles = 30;

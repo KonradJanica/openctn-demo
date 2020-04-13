@@ -1,11 +1,11 @@
 import * as React from "react";
-import BoardSmall from './board-small';
+import * as Components from './components/components';
 
 export default class App extends React.Component {
   render() {
     return (
       <div className="component-app">
-        <BoardSmall />
+        <Components.BoardSmall />
       </div>
     );
   }

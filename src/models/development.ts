@@ -1,4 +1,4 @@
-import {Shuffle} from './util/shuffle';
+import {Shuffle} from '../util/shuffle';
 
 const DEFAULT_KNIGHT_COUNT =14;
 const DEFAULT_VICTORY_POINT_COUNT = 5;

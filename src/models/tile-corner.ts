@@ -15,11 +15,9 @@ export interface TileCornerState {
 
 export class TileCorner {
   private readonly cornerState: TileCornerState;
-  private readonly tileEdges: TileEdge[];
+  tileEdges: TileEdge[] = [];
 
-  constructor(edges: TileEdge[]) {
-    this.tileEdges = edges;
-
+  constructor() {
     this.cornerState = {
       cornerType: TileCornerType.EMPTY,
       owner: null,
