@@ -16,7 +16,7 @@ export class BoardSmall implements IBoard {
 
   generateMap() {
     // Hard coded 4v4 map.
-    let tilesPerRow = [3, 4, 5, 4, 3];
+    const tilesPerRow = [3, 4, 5, 4, 3];
     let tiles = [];
     tilesPerRow.forEach((numTiles, rowIndex) => {
       let tilesInRow = [];
@@ -28,7 +28,7 @@ export class BoardSmall implements IBoard {
           for (let j = 0; j < 6; j++) {
             // 0-th and 1st corners are shared with the tile in the previous row (4th and 3rd corners).
             if (rowIndex > 0 && (j == 0 || j == 1)) {
-              let prevRowTile = tiles[tiles.length - 1][0];
+              const prevRowTile = tiles[tiles.length - 1][0];
               corners.push(prevRowTile.corners[(j == 0) ? 4 : 3]);
             } else {
               corners.push(new TileCorner());
@@ -37,10 +37,10 @@ export class BoardSmall implements IBoard {
           for (let j = 0; j < 6; j++) {
             // 0-th edge is shared with the tile in the previous row (3rd edge).
             if (rowIndex > 0 && j == 0) {
-              let prevRowTile = tiles[tiles.length - 1][0];
+              const prevRowTile = tiles[tiles.length - 1][0];
               edges.push(prevRowTile.edges[3]);
             } else {
-              let newEdge = new TileEdge(corners[j], corners[(j == 5) ? 0 : (j+1)]);
+              const newEdge = new TileEdge(corners[j], corners[(j == 5) ? 0 : (j+1)]);
               edges.push(newEdge);
               corners[j].tileEdges.push(newEdge);
               corners[(j == 5) ? 0 : (j+1)].tileEdges.push(newEdge);
@@ -48,11 +48,11 @@ export class BoardSmall implements IBoard {
           }
         } else {
           // Everything else to the right of it shares two corners and an edge with the previous tile.
-          let prevTile = this.tiles[this.tiles.length - 1];
+          const prevTile = this.tiles[this.tiles.length - 1];
           for (let j = 0; j < 6; j++) {
             if (rowIndex > 0 && (j == 0 || j == 1) && (tiles[tiles.length - 1].length < i)) {
               // 0-th and 1st corners are shared with the tile in the previous row (4th and 3rd corners).
-              let prevRowTile = tiles[tiles.length - 1][i];
+              const prevRowTile = tiles[tiles.length - 1][i];
               corners.push(prevRowTile.corners[(j == 0) ? 4 : 3]);
             } else if (j == 5) {
               // 1st corner of previous tile is shared with 5th corner of the new tile.
@@ -69,30 +69,30 @@ export class BoardSmall implements IBoard {
           for (let j = 0; j < 6; j++) {
             if (rowIndex > 0 && (j == 5)) {
               // 5th edge is shared with the 2nd edge of the tile in the previous row (to its right).
-              let prevRowTile = tiles[tiles.length - 1][i-1];
+              const prevRowTile = tiles[tiles.length - 1][i-1];
               edges.push(prevRowTile.edges[2]);
             } else if (rowIndex > 0 && (j == 0) && (tiles[tiles.length - 1].length < i)) {
               // 0th edge is shared with the 3rd edge of the tile in the previous row (to its left).
-              let prevRowTile = tiles[tiles.length - 1][i];
+              const prevRowTile = tiles[tiles.length - 1][i];
               edges.push(prevRowTile.edges[3]);
             } else if (j == 4) {
               // 4th edge is shared with the 1st of the previous tile.
               edges.push(prevTile.edges[1]);
             } else {
-              let newEdge = new TileEdge(corners[j], corners[(j == 5) ? 0 : (j+1)]);
+              const newEdge = new TileEdge(corners[j], corners[(j == 5) ? 0 : (j+1)]);
               edges.push(newEdge);
               corners[j].tileEdges.push(newEdge);
               corners[(j == 5) ? 0 : (j+1)].tileEdges.push(newEdge);
             }
           }
         }
-        let params : TileParams = {
+        const params : TileParams = {
           // TODO: Fix tile type.
           tileType: TileType.DESERT,
           cornerList: corners,
           edgeList : edges,
         }
-        let newTile = new Tile(params);
+        const newTile = new Tile(params);
         this.tiles.push(newTile);
         tilesInRow.push(newTile);
       }
