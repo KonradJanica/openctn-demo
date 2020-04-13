@@ -1,7 +1,15 @@
 import {TileCorner} from './tile-corner'
 import {TileEdge} from './tile-edge'
 import {IBoard} from './board-interface';
-import {Tile, TileParams, TileType} from './tile'
+import {Tile, TileParams, TileType} from './tile';
+import {Shuffle} from '../util/shuffle';
+
+const TILE_TYPE_AMOUNT_BRICK = 3;
+const TILE_TYPE_AMOUNT_DESERT = 1;
+const TILE_TYPE_AMOUNT_GRAIN = 4;
+const TILE_TYPE_AMOUNT_LUMBER = 4;
+const TILE_TYPE_AMOUNT_ORE = 3;
+const TILE_TYPE_AMOUNT_WOOL = 4;
 
 export default class BoardSmall implements IBoard {
   static readonly AmountTiles = 19;
@@ -10,11 +18,21 @@ export default class BoardSmall implements IBoard {
 
   constructor() {
     this.tiles = [];
-    this.generateMap();
-    this.positionTiles();
+    this.GenerateMap();
+    this.PositionTiles();
   }
 
-  generateMap() {
+  private GenerateMap() {
+    const availableTiles = [
+      ...Array(TILE_TYPE_AMOUNT_BRICK).fill(TileType.BRICK),
+      ...Array(TILE_TYPE_AMOUNT_DESERT).fill(TileType.DESERT),
+      ...Array(TILE_TYPE_AMOUNT_GRAIN).fill(TileType.GRAIN),
+      ...Array(TILE_TYPE_AMOUNT_LUMBER).fill(TileType.LUMBER),
+      ...Array(TILE_TYPE_AMOUNT_ORE).fill(TileType.ORE),
+      ...Array(TILE_TYPE_AMOUNT_WOOL).fill(TileType.WOOL),
+    ];
+    Shuffle(availableTiles);
+
     // Hard coded 4v4 map.
     const tilesPerRow = [3, 4, 5, 4, 3];
     let tiles = [];
@@ -88,7 +106,7 @@ export default class BoardSmall implements IBoard {
         }
         const params : TileParams = {
           // TODO: Fix tile type.
-          tileType: TileType.DESERT,
+          tileType: availableTiles.pop(),
           cornerList: corners,
           edgeList: edges
         }
@@ -100,7 +118,7 @@ export default class BoardSmall implements IBoard {
     });
   }
 
-  positionTiles() {
+  private PositionTiles() {
     let yPos = 0;
     let rowEnd = 0;
     let i = 0;

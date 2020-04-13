@@ -19,7 +19,7 @@ export default class BoardSmall extends React.Component {
       return <Components.Tile 
         xPos={val.xPos} 
         yPos={val.yPos}
-        tileType={TileType.WOOL}
+        tileType={val.tileType}
         />
       })
     );
