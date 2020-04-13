@@ -6,7 +6,7 @@ const DEFAULT_MONOPOLY_COUNT = 2;
 const DEFAULT_YEAR_OF_PLENTY_COUNT = 2;
 const DEFAULT_ROAD_BUILDING_COUNT = 2;
 
-export enum CardType {
+export enum DevelopmentCard {
   KNIGHT,
   VICTORY_POINT,
   MONOPOLY,
@@ -15,16 +15,16 @@ export enum CardType {
 };
 
 export class DevelopmentDeck {
-  private readonly deck: CardType[];
+  private readonly deck: DevelopmentCard[];
   private currentPos = 0;
 
   constructor() {
     this.deck = [
-      ...Array(DEFAULT_KNIGHT_COUNT).fill(CardType.KNIGHT),
-      ...Array(DEFAULT_VICTORY_POINT_COUNT).fill(CardType.VICTORY_POINT),
-      ...Array(DEFAULT_MONOPOLY_COUNT).fill(CardType.MONOPOLY),
-      ...Array(DEFAULT_YEAR_OF_PLENTY_COUNT).fill(CardType.YEAR_OF_PLENTY),
-      ...Array(DEFAULT_ROAD_BUILDING_COUNT).fill(CardType.ROAD_BUILDING),
+      ...Array(DEFAULT_KNIGHT_COUNT).fill(DevelopmentCard.KNIGHT),
+      ...Array(DEFAULT_VICTORY_POINT_COUNT).fill(DevelopmentCard.VICTORY_POINT),
+      ...Array(DEFAULT_MONOPOLY_COUNT).fill(DevelopmentCard.MONOPOLY),
+      ...Array(DEFAULT_YEAR_OF_PLENTY_COUNT).fill(DevelopmentCard.YEAR_OF_PLENTY),
+      ...Array(DEFAULT_ROAD_BUILDING_COUNT).fill(DevelopmentCard.ROAD_BUILDING),
     ];
 
     Shuffle(this.deck);
@@ -34,7 +34,7 @@ export class DevelopmentDeck {
     return this.currentPos >= this.deck.length;
   }
 
-  GetNext(): CardType | undefined {
+  GetNext(): DevelopmentCard | undefined {
     if (this.IsEmpty()) {
       return undefined;
     }
