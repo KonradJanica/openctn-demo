@@ -1,6 +1,7 @@
+import {IBoard} from './board-interface';
 import {Tile} from './tile'
 
-export class BoardSmall {
+export class BoardSmall implements IBoard {
   static readonly AmountTiles = 19;
 
   private readonly tiles: Tile[];
@@ -39,5 +40,10 @@ export class BoardSmall {
         ${i}
       </div>`;
     }).join("");
+  }
+
+  /** @implements */
+  GetTiles() {
+    return this.tiles;
   }
 }
