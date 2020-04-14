@@ -1,7 +1,8 @@
 import {TileCorner} from './tile-corner'
 import {TileEdge} from './tile-edge'
 import {IBoard} from './board-interface';
-import {Tile, TileParams, TileType, TilePlacement, LeftToRight, WaterTileBuilder} from './tile';
+import {Tile, LandTile, TileParams, TileType, 
+  TilePlacement, LeftToRight, WaterTileBuilder} from './tile';
 import {Shuffle} from '../util/shuffle';
 
 const TILE_TYPE_AMOUNT_BRICK = 3;
@@ -119,7 +120,7 @@ export default class BoardSmall implements IBoard {
           cornerList: corners,
           edgeList: edges
         }
-        const newTile = new Tile(params);
+        const newTile = new LandTile(params);
         this.tiles.push(newTile);
         tilesInRow.push(newTile);
       }
@@ -156,8 +157,13 @@ export default class BoardSmall implements IBoard {
   }
 
   private GenerateWater() {
-    this.tiles.forEach((val) => {
-      this.waterTiles.push.apply(this.waterTiles, WaterTileBuilder(val));
+    console.log("start of Generate water")
+
+    console.log("Tile placement: " + this.tiles[0].tilePlacement)
+    this.waterTiles.push.apply(this.waterTiles, WaterTileBuilder(this.tiles[0]))
+
+    this.waterTiles.forEach((val) => {
+      console.log("water tileType: " + val.tileType)
     });
   }
 

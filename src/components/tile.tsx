@@ -6,6 +6,8 @@ import Config from '../config';
 
 type TileProps = {
   tileType: TileType,
+  height: number,
+  width: number,
   xPos: number,
   yPos: number,
   rollNum: number,
@@ -29,6 +31,8 @@ export default class Tile extends React.Component<TileProps> {
         return `./assets/board/RES_ore.png`;
       case TileType.WATER:
         return `./assets/board/RES_water.png`;
+      case TileType.COAST_TOP_CENTER:
+        return `./assets/board/COAST_top_center.png`;
       default:
         // TODO: Replace with LocalLogger class
         console.error(`[components/tile.tsx] Unknown tile type: ${this.props.tileType}`);
@@ -57,16 +61,17 @@ export default class Tile extends React.Component<TileProps> {
       left: this.props.xPos,
     };
     const imgStyle : React.CSSProperties = {
-      height: Models.Tile.Height,
+      //height: Models.Tile.Height,
+      height: this.props.height,
       // Some tiles don't overlap perfectly, add some buffer.
       // Alternatively, we can increase the size of the problem images.
-      width: Models.Tile.Width + 3,
+      width: this.props.width + 3,
     };
     const rollNumbStyle : React.CSSProperties = {
       position: 'absolute',
       zIndex: 100,
-      top: Models.Tile.Height / 2 - Models.Tile.RollNumHeight / 2,
-      left: Models.Tile.Width / 2 - Models.Tile.RollNumWidth / 2,
+      top: this.props.height / 2 - Models.Tile.RollNumHeight / 2,
+      left: this.props.width / 2 - Models.Tile.RollNumWidth / 2,
     };
     return (<div className="tile" style={posStyle}>
       <img style={imgStyle} src={this.getTileImg()}></img>

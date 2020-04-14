@@ -20,6 +20,8 @@ export default class BoardSmall extends React.Component {
           return <Components.Tile 
             xPos={val.xPos} 
             yPos={val.yPos}
+            height={val.height}
+            width={val.width}
             tileType={val.tileType}
             rollNum={val.rollNum}
             debugIdx={i}
@@ -30,6 +32,8 @@ export default class BoardSmall extends React.Component {
           return <Components.Tile 
             xPos={val.xPos} 
             yPos={val.yPos}
+            height={val.height}
+            width={val.width}
             tileType={val.tileType}
             rollNum={0}
             debugIdx={i}

@@ -10,6 +10,7 @@ export enum TileType {
   ORE = "ore",
   BRICK = "brick",
   WATER = "water",
+  COAST_TOP_CENTER = "coast_top_center",
 }
 
 export enum TilePlacement {
@@ -120,10 +121,12 @@ export class Tile {
 
   // Game properties.
   readonly tileType : TileType;
-  readonly corners: TileCorner[];
-  readonly edges: TileEdge[];
+  corners: TileCorner[];
+  edges: TileEdge[];
 
   // Render properties.
+  public height : number;
+  public width : number;
   public xPos : number;
   public yPos : number;
   public tilePlacement : TilePlacement;
@@ -132,10 +135,16 @@ export class Tile {
   constructor(params: TileParams) {
     this.tileType = params.tileType;
     this.tilePlacement = params.tilePlacement;
-    if (params.tileType !== TileType.WATER) {
-      assert(params.cornerList.length == 6, "Number of corners must be 6.")
-      assert(params.edgeList.length == 6, "Number of edges must be 6.")
-    }
+    this.height = Tile.Height
+    this.width = Tile.Width
+  }
+}
+
+export class LandTile extends Tile{
+  constructor(params: TileParams) {
+    super(params)
+    assert(params.cornerList.length == 6, "Number of corners must be 6.")
+    assert(params.edgeList.length == 6, "Number of edges must be 6.")
     this.corners = params.cornerList;
     this.edges = params.edgeList;
   }
@@ -152,5 +161,23 @@ export class WaterTile extends Tile {
     super(params)
     this.xPos = xPos;
     this.yPos = yPos;
+    this.height = 128
+    this.width = 140
   }
 };
+
+//export class CoastTile extends Tile {
+  //readonly Height = 158;
+  //readonly Width = 158;
+  //constructor(xPos: number, yPos: number) {
+    //const params: TileParams = {
+      //tileType: TileType.COAST_TOP_CENTER,
+      //tilePlacement: TilePlacement.WATER,
+      //cornerList: null,
+      //edgeList: null,
+    //}
+    //super(params)
+    //this.xPos = xPos;
+    //this.yPos = yPos;
+  //}
+//};
