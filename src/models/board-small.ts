@@ -14,7 +14,7 @@ const TILE_TYPE_AMOUNT_WOOL = 4;
 export default class BoardSmall implements IBoard {
   static readonly AmountLandTiles = 19;
   static readonly SpiralTraversalIndices =
-   [0, 2, 5, 10, 15, 17, 18, 16, 13, 8, 3, 1, 4, 7, 12, 14, 11, 6, 9];
+   [0, 1, 3, 8, 13, 16, 18, 17, 15, 10, 5, 2, 4, 6, 11, 14, 12, 7, 9]
   static readonly SpiralRollNums =
    [5, 2, 6, 3, 8, 10, 9, 12, 11, 4, 8, 10, 9, 4, 5, 6, 3, 11];
 
