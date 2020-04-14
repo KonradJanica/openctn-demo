@@ -31,8 +31,18 @@ export default class Tile extends React.Component<TileProps> {
         return `./assets/board/RES_ore.png`;
       case TileType.WATER:
         return `./assets/board/RES_water.png`;
+      case TileType.COAST_BOTTOM_CENTER:
+        return `./assets/board/COAST_bottom_center.png`;
+      case TileType.COAST_BOTTOM_LEFT:
+        return `./assets/board/COAST_bottom_left.png`;
+      case TileType.COAST_BOTTOM_RIGHT:
+        return `./assets/board/COAST_bottom_right.png`;
       case TileType.COAST_TOP_CENTER:
         return `./assets/board/COAST_top_center.png`;
+      case TileType.COAST_TOP_LEFT:
+        return `./assets/board/COAST_top_left.png`;
+      case TileType.COAST_TOP_RIGHT:
+        return `./assets/board/COAST_top_right.png`;
       default:
         // TODO: Replace with LocalLogger class
         console.error(`[components/tile.tsx] Unknown tile type: ${this.props.tileType}`);
@@ -61,10 +71,9 @@ export default class Tile extends React.Component<TileProps> {
       left: this.props.xPos,
     };
     const imgStyle : React.CSSProperties = {
-      //height: Models.Tile.Height,
-      height: this.props.height,
       // Some tiles don't overlap perfectly, add some buffer.
       // Alternatively, we can increase the size of the problem images.
+      height: this.props.height + 3,
       width: this.props.width + 3,
     };
     const rollNumbStyle : React.CSSProperties = {
