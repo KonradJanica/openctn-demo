@@ -123,19 +123,16 @@ export default class BoardSmall implements IBoard {
     let rowEnd = 0;
     let i = 0;
     // Outer array represents rows.
-    // Inner array represents: [start pos, amount of tiles]
-    // TODO(konradjanica): find out what these magic offsets mean...
-    const o = 47;
-    const l = 94;
-    [[Tile.Width * 2, 1],
-     [Tile.Width + o, 2],
-     [0 + l, 3],
-     [Tile.Width + o, 2],
-     [0 + l, 3],
-     [Tile.Width + o, 2],
-     [0 + l, 3],
-     [Tile.Width + o, 2],
-     [Tile.Width * 2, 1]].forEach((val) => {
+    // Inner array represents: [x start pos, amount of tiles]
+    [[Tile.Width * 1.5, 1],
+     [Tile.Width * 0.75, 2],
+     [0, 3],
+     [Tile.Width * 0.75, 2],
+     [0, 3],
+     [Tile.Width * 0.75, 2],
+     [0, 3],
+     [Tile.Width * 0.75, 2],
+     [Tile.Width * 1.5, 1]].forEach((val) => {
        let xPos = val[0];
        rowEnd += val[1];
        for (; i < rowEnd; ++i) {

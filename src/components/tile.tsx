@@ -35,11 +35,15 @@ export default class Tile extends React.Component<TileProps> {
       position: 'absolute',
       top: this.props.yPos,
       left: this.props.xPos,
+    };
+    const imgStyle : React.CSSProperties = {
       height: Models.Tile.Height,
-      width: Models.Tile.Width,
+      // Some tiles don't overlap perfectly, add some buffer.
+      // Alternatively, we can increase the size of the problem images.
+      width: Models.Tile.Width + 2,
     };
     return (<div className="tile" style={posStyle}>
-      <img src={this.getImg()}></img>
+      <img style={imgStyle} src={this.getImg()}></img>
     </div>);
   }
 }
