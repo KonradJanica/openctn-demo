@@ -2,7 +2,6 @@ import * as React from "react";
 
 import * as Components from "./components"
 import * as Models from "../models/models"
-import {TileType} from "../models/tile"
 
 export default class BoardSmall extends React.Component {
   static readonly AmountTiles = 19;
@@ -15,13 +14,16 @@ export default class BoardSmall extends React.Component {
   }
 
   render() {
-    return (this.board.GetTiles().map((val, i) => {
-      return <Components.Tile 
-        xPos={val.xPos} 
-        yPos={val.yPos}
-        tileType={val.tileType}
-        />
-      })
+    return (
+      <div className="board">
+        {this.board.GetTiles().map((val, i) => {
+          return <Components.Tile 
+            xPos={val.xPos} 
+            yPos={val.yPos}
+            tileType={val.tileType}
+          />
+        })}
+      </div>
     );
   }
 }
