@@ -42,7 +42,7 @@ export default class Tile extends React.Component<TileProps> {
       height: Models.Tile.Height,
       // Some tiles don't overlap perfectly, add some buffer.
       // Alternatively, we can increase the size of the problem images.
-      width: Models.Tile.Width + 2,
+      width: Models.Tile.Width + 3,
     };
     return (<div className="tile" style={posStyle}>
       <img style={imgStyle} src={this.getImg()}></img>
