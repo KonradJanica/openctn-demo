@@ -23,6 +23,13 @@ export default class BoardSmall extends React.Component {
             tileType={val.tileType}
           />
         })}
+        {this.board.waterTiles.map((val, i) => {
+          return <Components.Tile 
+            xPos={val.xPos} 
+            yPos={val.yPos}
+            tileType={val.tileType}
+          />
+        })}
       </div>
     );
   }

@@ -9,10 +9,105 @@ export enum TileType {
   WOOL = "wool",
   ORE = "ore",
   BRICK = "brick",
+  WATER = "water",
+}
+
+export enum TilePlacement {
+  COAST_TOP,
+  COAST_TOP_LEFT_2,
+  COAST_TOP_LEFT_3,
+  COAST_TOP_RIGHT_2,
+  COAST_TOP_RIGHT_3,
+  COAST_LEFT,
+  COAST_BOTTOM,
+  COAST_BOTTOM_LEFT_2,
+  COAST_BOTTOM_LEFT_3,
+  COAST_BOTTOM_RIGHT_2,
+  COAST_BOTTOM_RIGHT_3,
+  COAST_RIGHT,
+  INLAND,
+  WATER,
+}
+
+export function LeftToRight(t: TilePlacement) : TilePlacement {
+  switch(t) {
+    case TilePlacement.COAST_TOP_LEFT_2:
+      return TilePlacement.COAST_TOP_RIGHT_2;
+    case TilePlacement.COAST_TOP_LEFT_3:
+      return TilePlacement.COAST_TOP_RIGHT_3;
+    case TilePlacement.COAST_BOTTOM:
+      return TilePlacement.COAST_BOTTOM;
+    case TilePlacement.COAST_BOTTOM_LEFT_2:
+      return TilePlacement.COAST_BOTTOM_RIGHT_2;
+    case TilePlacement.COAST_BOTTOM_LEFT_3:
+      return TilePlacement.COAST_BOTTOM_RIGHT_3;
+    case TilePlacement.COAST_LEFT:
+      return TilePlacement.COAST_RIGHT;
+    case TilePlacement.COAST_RIGHT:
+      return TilePlacement.COAST_LEFT;
+    default:
+      return t;
+  }
+}
+
+export function WaterTileBuilder(t: Tile) : Tile[] {
+  const res = [];
+  switch(t.tilePlacement) {
+    case TilePlacement.COAST_TOP: {
+      res.push(new WaterTile(t.xPos, t.yPos - Tile.Height));
+      break;
+    }
+    case TilePlacement.COAST_TOP_LEFT_2:
+    case TilePlacement.COAST_TOP_RIGHT_2: {
+      res.push(new WaterTile(t.xPos, t.yPos - Tile.Height));
+      break;
+    }
+    case TilePlacement.COAST_TOP_LEFT_3: {
+      res.push(new WaterTile(t.xPos, t.yPos - Tile.Height));
+      res.push(new WaterTile(t.xPos - Tile.Width * 0.75, t.yPos - Tile.Height / 2));
+      break;
+    }
+    case TilePlacement.COAST_TOP_RIGHT_3: {
+      res.push(new WaterTile(t.xPos, t.yPos - Tile.Height));
+      res.push(new WaterTile(t.xPos + Tile.Width * 0.75, t.yPos - Tile.Height / 2));
+      break;
+    }
+    case TilePlacement.COAST_LEFT: {
+      res.push(new WaterTile(t.xPos - Tile.Width * 0.75, t.yPos - Tile.Height / 2));
+      res.push(new WaterTile(t.xPos - Tile.Width * 0.75, t.yPos + Tile.Height / 2));
+      break;
+    }
+    case TilePlacement.COAST_BOTTOM: {
+      res.push(new WaterTile(t.xPos, t.yPos + Tile.Height));
+      break;
+    }
+    case TilePlacement.COAST_BOTTOM_LEFT_2:
+    case TilePlacement.COAST_BOTTOM_RIGHT_2: {
+      res.push(new WaterTile(t.xPos, t.yPos + Tile.Height));
+      break;
+    }
+    case TilePlacement.COAST_BOTTOM_LEFT_3: {
+      res.push(new WaterTile(t.xPos, t.yPos + Tile.Height));
+      res.push(new WaterTile(t.xPos - Tile.Width * 0.75, t.yPos + Tile.Height / 2));
+      break;
+    }
+    case TilePlacement.COAST_BOTTOM_RIGHT_3: {
+      res.push(new WaterTile(t.xPos, t.yPos + Tile.Height));
+      res.push(new WaterTile(t.xPos + Tile.Width * 0.75, t.yPos + Tile.Height / 2));
+      break;
+    }
+    case TilePlacement.COAST_RIGHT: {
+      res.push(new WaterTile(t.xPos + Tile.Width * 0.75, t.yPos + Tile.Height / 2));
+      res.push(new WaterTile(t.xPos + Tile.Width * 0.75, t.yPos - Tile.Height / 2));
+      break;
+    } 
+  }
+  return res;
 }
 
 export interface TileParams {
   tileType: TileType;
+  tilePlacement: TilePlacement;
   cornerList: TileCorner[];
   edgeList: TileEdge[];
 }
@@ -29,12 +124,30 @@ export class Tile {
   // Render properties.
   public xPos : number;
   public yPos : number;
+  public tilePlacement : TilePlacement;
 
   constructor(params: TileParams) {
     this.tileType = params.tileType;
-    assert(params.cornerList.length == 6, "Number of corners must be 6.")
-    assert(params.edgeList.length == 6, "Number of edges must be 6.")
+    this.tilePlacement = params.tilePlacement;
+    if (params.tileType !== TileType.WATER) {
+      assert(params.cornerList.length == 6, "Number of corners must be 6.")
+      assert(params.edgeList.length == 6, "Number of edges must be 6.")
+    }
     this.corners = params.cornerList;
     this.edges = params.edgeList;
+  }
+};
+
+export class WaterTile extends Tile {
+  constructor(xPos: number, yPos: number) {
+    const params: TileParams = {
+      tileType: TileType.WATER,
+      tilePlacement: TilePlacement.WATER,
+      cornerList: null,
+      edgeList: null,
+    }
+    super(params)
+    this.xPos = xPos;
+    this.yPos = yPos;
   }
 };

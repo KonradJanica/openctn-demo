@@ -24,6 +24,8 @@ export default class Tile extends React.Component<TileProps> {
         return `./assets/board/RES_wood.png`;
       case TileType.ORE:
         return `./assets/board/RES_ore.png`;
+      case TileType.WATER:
+        return `./assets/board/RES_water.png`;
       default:
         // TODO: Replace with LocalLogger class
         console.error(`[components/tile.tsx] Unknown tile type: ${this.props.tileType}`);

@@ -1,7 +1,7 @@
 import {TileCorner} from './tile-corner'
 import {TileEdge} from './tile-edge'
 import {IBoard} from './board-interface';
-import {Tile, TileParams, TileType} from './tile';
+import {Tile, TileParams, TileType, TilePlacement, LeftToRight, WaterTileBuilder} from './tile';
 import {Shuffle} from '../util/shuffle';
 
 const TILE_TYPE_AMOUNT_BRICK = 3;
@@ -12,14 +12,17 @@ const TILE_TYPE_AMOUNT_ORE = 3;
 const TILE_TYPE_AMOUNT_WOOL = 4;
 
 export default class BoardSmall implements IBoard {
-  static readonly AmountTiles = 19;
+  static readonly AmountLandTiles = 19;
 
   private readonly tiles: Tile[];
+  public readonly waterTiles: Tile[];
 
   constructor() {
     this.tiles = [];
+    this.waterTiles = [];
     this.GenerateMap();
     this.PositionTiles();
+    this.GenerateWater();
   }
 
   private GenerateMap() {
@@ -107,6 +110,7 @@ export default class BoardSmall implements IBoard {
         const params : TileParams = {
           // TODO: Fix tile type.
           tileType: availableTiles.pop(),
+          tilePlacement: TilePlacement.INLAND,
           cornerList: corners,
           edgeList: edges
         }
@@ -123,25 +127,33 @@ export default class BoardSmall implements IBoard {
     let rowEnd = 0;
     let i = 0;
     // Outer array represents rows.
-    // Inner array represents: [x start pos, amount of tiles]
-    [[Tile.Width * 1.5, 1],
-     [Tile.Width * 0.75, 2],
-     [0, 3],
-     [Tile.Width * 0.75, 2],
-     [0, 3],
-     [Tile.Width * 0.75, 2],
-     [0, 3],
-     [Tile.Width * 0.75, 2],
-     [Tile.Width * 1.5, 1]].forEach((val) => {
+    // Inner array represents: [x start pos, amount of tiles, start placement]
+    [[Tile.Width * 1.5, 1, TilePlacement.COAST_TOP],
+     [Tile.Width * 0.75, 2, TilePlacement.COAST_TOP_LEFT_2],
+     [0, 3, TilePlacement.COAST_TOP_LEFT_3],
+     [Tile.Width * 0.75, 2, TilePlacement.INLAND],
+     [0, 3, TilePlacement.COAST_LEFT],
+     [Tile.Width * 0.75, 2, TilePlacement.INLAND],
+     [0, 3, TilePlacement.COAST_BOTTOM_LEFT_3],
+     [Tile.Width * 0.75, 2, TilePlacement.COAST_BOTTOM_LEFT_2],
+     [Tile.Width * 1.5, 1, TilePlacement.COAST_BOTTOM]].forEach((val) => {
        let xPos = val[0];
        rowEnd += val[1];
+       this.tiles[i].tilePlacement = val[2];
        for (; i < rowEnd; ++i) {
          this.tiles[i].xPos = xPos;
          this.tiles[i].yPos = yPos;
          xPos += Tile.Width * 1.5;
        }
+       this.tiles[i - 1].tilePlacement = LeftToRight(val[2]);
        yPos += Tile.Height / 2;
      });
+  }
+
+  private GenerateWater() {
+    this.tiles.forEach((val) => {
+      this.waterTiles.push.apply(this.waterTiles, WaterTileBuilder(val));
+    });
   }
 
   /** @implements */
