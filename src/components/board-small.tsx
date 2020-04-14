@@ -23,6 +23,7 @@ export default class BoardSmall extends React.Component {
             tileType={val.tileType}
             rollNum={val.rollNum}
             debugIdx={i}
+            key={i}
           />
         })}
         {this.board.waterTiles.map((val, i) => {
@@ -32,6 +33,7 @@ export default class BoardSmall extends React.Component {
             tileType={val.tileType}
             rollNum={0}
             debugIdx={i}
+            key={i}
           />
         })}
       </div>

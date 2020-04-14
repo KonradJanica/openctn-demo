@@ -70,7 +70,7 @@ export default class Tile extends React.Component<TileProps> {
     };
     return (<div className="tile" style={posStyle}>
       <img style={imgStyle} src={this.getTileImg()}></img>
-      {this.props.tileType !== TileType.WATER ? <img style={rollNumbStyle} src={this.getRollNumImg()}></img> : null}
+      {this.props.rollNum !== 0 ? <img style={rollNumbStyle} src={this.getRollNumImg()}></img> : null}
       {this.debug()}
     </div>);
   }

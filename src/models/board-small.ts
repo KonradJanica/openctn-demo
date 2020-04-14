@@ -162,9 +162,14 @@ export default class BoardSmall implements IBoard {
   }
 
   private PositionNumbers() {
+    let i = 0;
     BoardSmall.SpiralTraversalIndices.forEach((val) => {
-      if (this.tiles[val].tileType === TileType.DESERT) return;
-      this.tiles[val].rollNum = BoardSmall.SpiralRollNums[val];
+      if (this.tiles[val].tileType === TileType.DESERT) {
+        this.tiles[val].rollNum = 0;
+        return;
+      }
+      this.tiles[val].rollNum = BoardSmall.SpiralRollNums[i];
+      ++i;
     });
   }
 
