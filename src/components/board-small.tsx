@@ -21,6 +21,8 @@ export default class BoardSmall extends React.Component {
             xPos={val.xPos} 
             yPos={val.yPos}
             tileType={val.tileType}
+            rollNum={val.rollNum}
+            debugIdx={i}
           />
         })}
         {this.board.waterTiles.map((val, i) => {
@@ -28,6 +30,8 @@ export default class BoardSmall extends React.Component {
             xPos={val.xPos} 
             yPos={val.yPos}
             tileType={val.tileType}
+            rollNum={0}
+            debugIdx={i}
           />
         })}
       </div>

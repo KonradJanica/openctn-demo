@@ -115,6 +115,8 @@ export interface TileParams {
 export class Tile {
   static readonly Height = 158;
   static readonly Width = 188;
+  static readonly RollNumHeight = 54;
+  static readonly RollNumWidth = 54;
 
   // Game properties.
   readonly tileType : TileType;
@@ -125,6 +127,7 @@ export class Tile {
   public xPos : number;
   public yPos : number;
   public tilePlacement : TilePlacement;
+  public rollNum : number;
 
   constructor(params: TileParams) {
     this.tileType = params.tileType;
