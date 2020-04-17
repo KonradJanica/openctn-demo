@@ -27,6 +27,8 @@ export interface DockParams {
 }
 
 export default class Dock {
+    public static readonly DockPlacerWidth = 34;
+    public static readonly DockPlacerHeight = 34;
     public static readonly DockTypeWidth = 90;
     public static readonly DockTypeHeight = 90;
     private static readonly VerticalBeachBuffer = 35;
@@ -39,6 +41,10 @@ export default class Dock {
     public readonly height: number;
     public readonly dockPlacement: DockPlacement;
     public readonly dockType: DockType;
+    public readonly xPlacer1Pos: number;
+    public readonly yPlacer1Pos: number;
+    public readonly xPlacer2Pos: number;
+    public readonly yPlacer2Pos: number;
 
     constructor(dp: DockParams) {
         this.dockPlacement = dp.dockPlacement;
@@ -49,36 +55,60 @@ export default class Dock {
                 this.yPos = dp.tileYPos - Tile.Height / 2 - Dock.VerticalBeachBuffer; 
                 this.width = 106;
                 this.height = 37;
+                this.xPlacer1Pos = dp.tileXPos + Tile.Width / 4;
+                this.yPlacer1Pos = dp.tileYPos - Tile.Height / 2;
+                this.xPlacer2Pos = this.xPlacer1Pos + this.width;
+                this.yPlacer2Pos = dp.tileYPos - Tile.Height / 2;
                 break;
             case DockPlacement.TOP_RIGHT:
                 this.xPos = dp.tileXPos + Tile.Width / 2 + Dock.DiagonalBeachBuffer;
                 this.yPos = dp.tileYPos - Tile.Height / 4 - Dock.DiagonalBeachBuffer; 
                 this.width = 89;
                 this.height = 87;
+                this.xPlacer1Pos = 0;
+                this.yPlacer1Pos = 0;
+                this.xPlacer2Pos = this.width;
+                this.yPlacer2Pos = 0;
                 break;
             case DockPlacement.BOTTOM_RIGHT:
                 this.xPos = dp.tileXPos + Tile.Width / 2 + Dock.DiagonalBeachBuffer;
                 this.yPos = dp.tileYPos + Tile.Height / 4 + Dock.DiagonalBeachBuffer; 
                 this.width = 86;
                 this.height = 93;
+                this.xPlacer1Pos = 0;
+                this.yPlacer1Pos = 0;
+                this.xPlacer2Pos = this.width;
+                this.yPlacer2Pos = 0;
                 break;
             case DockPlacement.BOTTOM_CENTER:
                 this.xPos = dp.tileXPos;
                 this.yPos = dp.tileYPos + Tile.Height / 2 + Dock.VerticalBeachBuffer; 
                 this.width = 116;
                 this.height = 43;
+                this.xPlacer1Pos = dp.tileXPos + Tile.Width / 4;
+                this.yPlacer1Pos = dp.tileYPos + Tile.Height / 2;
+                this.xPlacer2Pos = this.xPlacer1Pos + this.width;
+                this.yPlacer2Pos = dp.tileYPos + Tile.Height / 2;
                 break;
             case DockPlacement.BOTTOM_LEFT:
                 this.xPos = dp.tileXPos - Tile.Width / 2 - Dock.DiagonalBeachBuffer;
                 this.yPos = dp.tileYPos + Tile.Height / 4 + Dock.DiagonalBeachBuffer; 
                 this.width = 86;
                 this.height = 93;
+                this.xPlacer1Pos = 0;
+                this.yPlacer1Pos = 0;
+                this.xPlacer2Pos = this.width;
+                this.yPlacer2Pos = 0;
                 break;
             case DockPlacement.TOP_LEFT:
                 this.xPos = dp.tileXPos - Tile.Width / 2 - Dock.DiagonalBeachBuffer;
                 this.yPos = dp.tileYPos - Tile.Height / 4 - Dock.DiagonalBeachBuffer; 
                 this.width = 89;
                 this.height = 87;
+                this.xPlacer1Pos = 0;
+                this.yPlacer1Pos = 0;
+                this.xPlacer2Pos = this.width;
+                this.yPlacer2Pos = 0;
                 break;
         }
     }
