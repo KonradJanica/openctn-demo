@@ -40,6 +40,16 @@ export default class BoardSmall extends React.Component {
             key={i}
           />
         })}
+        {this.board.docks.map((val, i) => {
+          return <Components.Dock 
+            xPos={val.xPos} 
+            yPos={val.yPos}
+            dockPlacement={val.dockPlacement}
+            width={val.width}
+            height={val.height}
+            key={i}
+          />
+        })}
       </div>
     );
   }

@@ -4,6 +4,7 @@ import {IBoard} from './board-interface';
 import {Tile, LandTile, TileParams, TileType, TilePlacement, LeftToRight, 
   WaterTileBuilder, CoastTileBuilder} from './tile';
 import {Shuffle} from '../util/shuffle';
+import Dock, { DockPlacement, DockParams } from './dock';
 
 const TILE_TYPE_AMOUNT_BRICK = 3;
 const TILE_TYPE_AMOUNT_DESERT = 1;
@@ -21,13 +22,16 @@ export default class BoardSmall implements IBoard {
 
   private readonly tiles: Tile[];
   public readonly waterTiles: Tile[];
+  public readonly docks: Dock[];
 
   constructor() {
     this.tiles = [];
     this.waterTiles = [];
+    this.docks = [];
     this.GenerateMap();
     this.PositionTiles();
     this.GenerateWater();
+    this.GenerateDocks();
     this.PositionNumbers();
   }
 
@@ -153,6 +157,25 @@ export default class BoardSmall implements IBoard {
        }
        this.tiles[i - 1].tilePlacement = LeftToRight(val[2]);
        yPos += Tile.Height / 2;
+     });
+  }
+
+  private GenerateDocks() {
+    [{tileIdx:0, dp:DockPlacement.TOP_CENTER},
+     {tileIdx:1, dp:DockPlacement.TOP_LEFT},
+     {tileIdx:2, dp:DockPlacement.TOP_RIGHT},
+     {tileIdx:8, dp:DockPlacement.TOP_LEFT},
+     {tileIdx:10, dp:DockPlacement.TOP_RIGHT},
+     {tileIdx:13, dp:DockPlacement.BOTTOM_LEFT},
+     {tileIdx:15, dp:DockPlacement.BOTTOM_RIGHT},
+     {tileIdx:16, dp:DockPlacement.BOTTOM_CENTER},
+     {tileIdx:17, dp:DockPlacement.BOTTOM_CENTER}].forEach((val) => {
+       const dp : DockParams = {
+         tileXPos: this.tiles[val.tileIdx].xPos,
+         tileYPos: this.tiles[val.tileIdx].yPos,
+         dockPlacement: val.dp,
+       };
+       this.docks.push(new Dock(dp));
      });
   }
 

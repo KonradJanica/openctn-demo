@@ -16,37 +16,7 @@ type TileProps = {
 
 export default class Tile extends React.Component<TileProps> {
   getTileImg(): string {
-    switch (this.props.tileType) {
-      case TileType.BRICK:
-        return `./assets/board/RES_brick.png`;
-      case TileType.WOOL:
-        return `./assets/board/RES_wool.png`;
-      case TileType.GRAIN:
-        return `./assets/board/RES_grain.png`;
-      case TileType.DESERT:
-       return `./assets/board/RES_desert.png`;
-      case TileType.LUMBER:
-        return `./assets/board/RES_wood.png`;
-      case TileType.ORE:
-        return `./assets/board/RES_ore.png`;
-      case TileType.WATER:
-        return `./assets/board/RES_water.png`;
-      case TileType.COAST_BOTTOM_CENTER:
-        return `./assets/board/COAST_bottom_center.png`;
-      case TileType.COAST_BOTTOM_LEFT:
-        return `./assets/board/COAST_bottom_left.png`;
-      case TileType.COAST_BOTTOM_RIGHT:
-        return `./assets/board/COAST_bottom_right.png`;
-      case TileType.COAST_TOP_CENTER:
-        return `./assets/board/COAST_top_center.png`;
-      case TileType.COAST_TOP_LEFT:
-        return `./assets/board/COAST_top_left.png`;
-      case TileType.COAST_TOP_RIGHT:
-        return `./assets/board/COAST_top_right.png`;
-      default:
-        // TODO: Replace with LocalLogger class
-        console.error(`[components/tile.tsx] Unknown tile type: ${this.props.tileType}`);
-    }
+    return `./assets/board/${this.props.tileType}.png`;
   }
 
   getRollNumImg(): string {

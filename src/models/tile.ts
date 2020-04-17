@@ -1,21 +1,22 @@
 import {TileCorner} from './tile-corner';
 import {TileEdge} from './tile-edge';
 import {assert} from '../util/error';
+import Dock, { DockPlacement } from './dock';
 
 export enum TileType {
-  DESERT = "desert",
-  GRAIN = "grain",
-  LUMBER = "lumber",
-  WOOL = "wool",
-  ORE = "ore",
-  BRICK = "brick",
-  WATER = "water",
-  COAST_BOTTOM_CENTER = "coast_bottom_center",
-  COAST_BOTTOM_LEFT = "coast_bottom_left",
-  COAST_BOTTOM_RIGHT = "coast_bottom_right",
-  COAST_TOP_CENTER = "coast_top_center",
-  COAST_TOP_LEFT = "coast_top_left",
-  COAST_TOP_RIGHT = "coast_top_right",
+  DESERT = "RES_desert",
+  GRAIN = "RES_grain",
+  LUMBER = "RES_lumber",
+  WOOL = "RES_wool",
+  ORE = "RES_ore",
+  BRICK = "RES_brick",
+  WATER = "RES_water",
+  COAST_BOTTOM_CENTER = "COAST_bottom_center",
+  COAST_BOTTOM_LEFT = "COAST_bottom_left",
+  COAST_BOTTOM_RIGHT = "COAST_bottom_right",
+  COAST_TOP_CENTER = "COAST_top_center",
+  COAST_TOP_LEFT = "COAST_top_left",
+  COAST_TOP_RIGHT = "COAST_top_right",
 }
 
 export enum TilePlacement {
