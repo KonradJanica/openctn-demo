@@ -13,5 +13,5 @@
 
 body {
     background-image: url("./assets/board/BG_water.jpg");
-    background-repeat: repeat-xy;
+    background-repeat: repeat;
 }
