@@ -45,6 +45,7 @@ export default class BoardSmall extends React.Component {
             xPos={val.xPos} 
             yPos={val.yPos}
             dockPlacement={val.dockPlacement}
+            dockType={val.dockType}
             width={val.width}
             height={val.height}
             key={i}

@@ -4,7 +4,7 @@ import {IBoard} from './board-interface';
 import {Tile, LandTile, TileParams, TileType, TilePlacement, LeftToRight, 
   WaterTileBuilder, CoastTileBuilder} from './tile';
 import {Shuffle} from '../util/shuffle';
-import Dock, { DockPlacement, DockParams } from './dock';
+import Dock, { DockPlacement, DockParams, DockType } from './dock';
 
 const TILE_TYPE_AMOUNT_BRICK = 3;
 const TILE_TYPE_AMOUNT_DESERT = 1;
@@ -161,6 +161,15 @@ export default class BoardSmall implements IBoard {
   }
 
   private GenerateDocks() {
+    const availableTypes = [
+      ...Array(4).fill(DockType.ANY),
+      DockType.BRICK,
+      DockType.GRAIN,
+      DockType.LUMBER,
+      DockType.ORE,
+      DockType.WOOL,
+    ];
+    Shuffle(availableTypes);
     [{tileIdx:0, dp:DockPlacement.TOP_CENTER},
      {tileIdx:1, dp:DockPlacement.TOP_LEFT},
      {tileIdx:2, dp:DockPlacement.TOP_RIGHT},
@@ -174,6 +183,7 @@ export default class BoardSmall implements IBoard {
          tileXPos: this.tiles[val.tileIdx].xPos,
          tileYPos: this.tiles[val.tileIdx].yPos,
          dockPlacement: val.dp,
+         dockType: availableTypes.pop(),
        };
        this.docks.push(new Dock(dp));
      });

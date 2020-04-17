@@ -10,14 +10,26 @@ export enum DockPlacement {
   NONE = "COVE_none",
 }
 
+export enum DockType {
+    ANY = "PORT_any",
+    GRAIN = "PORT_grain",
+    LUMBER = "PORT_lumber",
+    WOOL = "PORT_wool",
+    ORE = "PORT_ore",
+    BRICK = "PORT_brick",
+}
+
 export interface DockParams {
     tileXPos: number,
     tileYPos: number,
     dockPlacement: DockPlacement,
+    dockType: DockType,
 }
 
 export default class Dock {
-    private static readonly VerticalBeachBuffer = 40;
+    public static readonly DockTypeWidth = 90;
+    public static readonly DockTypeHeight = 90;
+    private static readonly VerticalBeachBuffer = 35;
     private static readonly DiagonalBeachBuffer = 15;
 
     // Render properties.
@@ -26,9 +38,11 @@ export default class Dock {
     public readonly width: number;
     public readonly height: number;
     public readonly dockPlacement: DockPlacement;
+    public readonly dockType: DockType;
 
     constructor(dp: DockParams) {
         this.dockPlacement = dp.dockPlacement;
+        this.dockType = dp.dockType;
         switch(dp.dockPlacement) {
             case DockPlacement.TOP_CENTER:
                 this.xPos = dp.tileXPos;
