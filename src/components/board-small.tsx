@@ -24,6 +24,8 @@ export default class BoardSmall extends React.Component {
             width={val.width}
             tileType={val.tileType}
             rollNum={val.rollNum}
+            cornerList={val.corners}
+            edgeList={val.edges}
             debugIdx={i}
             key={i}
           />
@@ -36,6 +38,8 @@ export default class BoardSmall extends React.Component {
             width={val.width}
             tileType={val.tileType}
             rollNum={0}
+            cornerList={val.corners}
+            edgeList={val.edges}
             debugIdx={i}
             key={i}
           />

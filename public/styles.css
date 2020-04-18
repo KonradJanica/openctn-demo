@@ -5,10 +5,16 @@
 }
 
 .debug {
-    position: absolute;
     z-index: 10000;
     font-size: 50px;
-    color: white;
+    -webkit-text-stroke: 3px black;
+}
+
+.debug-small {
+    position: absolute;
+    z-index: 10000;
+    font-size: 30px;
+    -webkit-text-stroke: 3px black;
 }
 
 body {

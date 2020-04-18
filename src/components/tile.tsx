@@ -1,8 +1,10 @@
 import * as React from 'react';
 import * as Models from '../models/models'
 
-import {TileType} from '../models/tile'
 import Config from '../config';
+import { TileType } from '../models/tile'
+import { TileCorner } from '../models/tile-corner';
+import { TileEdge } from '../models/tile-edge';
 
 type TileProps = {
   tileType: TileType,
@@ -11,6 +13,8 @@ type TileProps = {
   xPos: number,
   yPos: number,
   rollNum: number,
+  cornerList: TileCorner[];
+  edgeList: TileEdge[];
   debugIdx: number,
 }
 
@@ -24,13 +28,20 @@ export default class Tile extends React.Component<TileProps> {
   }
 
   debug() {
-    if (!Config.IsDebug) return null;
+    // Only show debug for land tiles
+    if (!Config.IsDebug ||
+        this.props.tileType.toLowerCase().includes("water") ||
+        this.props.tileType.toLowerCase().includes("coast")) return null;
     const debugStyle : React.CSSProperties = {
-      top: Models.Tile.Height / 2,
-      left: Models.Tile.Width / 2,
+      position: 'absolute',
+      top: Models.Tile.Height / 4,
+      left: Models.Tile.Width / 4,
     };
-    return (<div className="debug" style={debugStyle}>
-      {this.props.debugIdx}
+    return (<div style={debugStyle}>
+        <div className="debug">{this.props.debugIdx}</div>
+      <div className="debug-small">
+        {`corners:${this.props.cornerList.length}, edges:${this.props.edgeList.length}`}
+      </div>
     </div>)
   }
 

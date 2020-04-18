@@ -222,13 +222,6 @@ export interface TileParams {
   edgeList: TileEdge[];
 }
 
-export interface TileParams {
-  tileType: TileType;
-  tilePlacement: TilePlacement;
-  cornerList: TileCorner[];
-  edgeList: TileEdge[];
-}
-
 export class Tile {
   static readonly Height = 158;
   static readonly Width = 188;
