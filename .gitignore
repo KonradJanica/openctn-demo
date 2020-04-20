@@ -118,4 +118,5 @@ dist
 .pnp.*
 
 # Vim
-src/.*
+**/*.swp
+**/*.swo

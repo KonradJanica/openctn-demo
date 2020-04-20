@@ -252,8 +252,6 @@ export class Tile {
 export class LandTile extends Tile{
   constructor(params: TileParams) {
     super(params)
-    assert(params.cornerList.length == 6, "Number of corners must be 6.")
-    assert(params.edgeList.length == 6, "Number of edges must be 6.")
     this.corners = params.cornerList;
     this.edges = params.edgeList;
   }

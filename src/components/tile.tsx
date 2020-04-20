@@ -1,5 +1,6 @@
 import * as React from 'react';
 import * as Models from '../models/models'
+import * as Components from "./components"
 
 import Config from '../config';
 import { TileType } from '../models/tile'
@@ -63,9 +64,52 @@ export default class Tile extends React.Component<TileProps> {
       top: this.props.height / 2 - Models.Tile.RollNumHeight / 2,
       left: this.props.width / 2 - Models.Tile.RollNumWidth / 2,
     };
+    let corners = [];
+    if (this.props.cornerList != undefined) {
+      corners = this.props.cornerList;
+    }
+
+    let edges = [];
+    if (this.props.edgeList != undefined) {
+      edges = this.props.edgeList;
+    }
+
     return (<div className="tile" style={posStyle}>
       <img style={imgStyle} src={this.getTileImg()}></img>
       {this.props.rollNum !== 0 ? <img style={rollNumbStyle} src={this.getRollNumImg()}></img> : null}
+      {
+        corners.map((val, i) => {
+          if (!val.isRendered) {
+            val.isRendered = true;
+            return <Components.TileCorner
+            xPos={val.xPos}
+            yPos={val.yPos}
+            width={Models.TileCorner.Width}
+            height={Models.TileCorner.Height}
+            tileCornerType={val.State().cornerType}
+            debugIdx={i}
+            key={i}
+              />
+          }
+        })
+      }
+      {
+        edges.map((val, i) => {
+          if (!val.isRendered) {
+            val.isRendered = true;
+            return <Components.TileEdge
+            xPos={val.xPos}
+            yPos={val.yPos}
+            width={val.width}
+            height={val.height}
+            tileEdgeType={val.State().EdgeType}
+            index={i}
+            debugIdx={i}
+            key={i}
+              />
+          }
+        })
+      }
       {this.debug()}
     </div>);
   }
