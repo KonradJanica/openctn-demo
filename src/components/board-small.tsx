@@ -1,22 +1,27 @@
 import * as React from "react";
 
 import * as Components from "./components"
-import * as Models from "../models/models"
+import { IBoard } from "../models/board-interface";
 
-export default class BoardSmall extends React.Component {
+type BoardSmallProps = {
+  board: IBoard
+}
+type BoardSmallState = BoardSmallProps
+
+export default class BoardSmall extends React.Component<BoardSmallProps, BoardSmallState> {
   static readonly AmountTiles = 19;
-
-  private readonly board: Models.BoardSmall;
 
   constructor(props) {
     super(props)
-    this.board = new Models.BoardSmall();
+    this.state = {
+      board: props.board,
+    };
   }
 
   render() {
     return (
       <div className="board">
-        {this.board.GetTiles().map((val, i) => {
+        {this.state.board.GetTiles().map((val, i) => {
           return <Components.Tile 
             xPos={val.xPos} 
             yPos={val.yPos}
@@ -30,7 +35,7 @@ export default class BoardSmall extends React.Component {
             key={i}
           />
         })}
-        {this.board.waterTiles.map((val, i) => {
+        {this.state.board.GetWaterTiles().map((val, i) => {
           return <Components.Tile 
             xPos={val.xPos} 
             yPos={val.yPos}
@@ -44,7 +49,7 @@ export default class BoardSmall extends React.Component {
             key={i}
           />
         })}
-        {this.board.docks.map((val, i) => {
+        {this.state.board.GetDocks().map((val, i) => {
           return <Components.Dock 
             xPos={val.xPos} 
             yPos={val.yPos}

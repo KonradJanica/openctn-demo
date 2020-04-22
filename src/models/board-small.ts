@@ -36,7 +36,7 @@ export default class BoardSmall implements IBoard {
     this.GenerateDocks();
     this.PositionNumbers();
   }
-
+  
   private GenerateMap() {
     const availableTiles = [
       ...Array(TILE_TYPE_AMOUNT_BRICK).fill(TileType.BRICK),
@@ -73,7 +73,6 @@ export default class BoardSmall implements IBoard {
     // The description here uses 0 based index system.
     const tilesPerRow = [1, 2, 3, 2, 3, 2, 3, 2, 1];
     let tileObjsPerRow = [];
-    console.log('HELLO');
     tilesPerRow.forEach((numTiles, rowIndex) => {
       let tilesInRow = [];
       for (let tileIndex = 0; tileIndex < numTiles; tileIndex++) {
@@ -312,5 +311,15 @@ export default class BoardSmall implements IBoard {
   /** @implements */
   GetTiles() {
     return this.tiles;
+  }
+
+  /** @implements */
+  GetWaterTiles(): Tile[] {
+    return this.waterTiles;
+  }
+
+  /** @implements */
+  GetDocks(): Dock[] {
+    return this.docks;
   }
 }

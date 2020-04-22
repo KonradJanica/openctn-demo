@@ -14,4 +14,12 @@ export class BoardLarge implements IBoard {
   GetTiles() {
     return this.tiles;
   }
+
+  GetWaterTiles() {
+    return [];
+  }
+
+  GetDocks() {
+    return [];
+  }
 }
