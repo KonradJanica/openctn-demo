@@ -1,18 +1,15 @@
 import { END_TURN, ADD_PLAYER, SET_DICE } from '../actionTypes'
 import { Player } from '../../models/player';
-import { BoardSmall } from '../../models/models';
 import { IBoard } from '../../models/board-interface';
 
 interface state {
     die1: number,
     die2: number,
-    board: IBoard,
     players: Player[],
     activePlayerIdx: number,
 }
 
 const initialState : state = {
-    board: new BoardSmall(),
     die1: 0,
     die2: 0,
     players: [],

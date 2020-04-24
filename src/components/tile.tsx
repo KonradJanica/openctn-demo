@@ -79,8 +79,7 @@ export default class Tile extends React.Component<TileProps> {
       {this.props.rollNum !== 0 ? <img style={rollNumbStyle} src={this.getRollNumImg()}></img> : null}
       {
         corners.map((val, i) => {
-          if (!val.isRendered) {
-            val.isRendered = true;
+          if (val.isRendered) {
             return <Components.TileCorner
             xPos={val.xPos}
             yPos={val.yPos}
@@ -95,8 +94,7 @@ export default class Tile extends React.Component<TileProps> {
       }
       {
         edges.map((val, i) => {
-          if (!val.isRendered) {
-            val.isRendered = true;
+          if (val.isRendered) {
             return <Components.TileEdge
             xPos={val.xPos}
             yPos={val.yPos}

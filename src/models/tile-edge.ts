@@ -30,6 +30,7 @@ export class TileEdge {
       edgeType: TileEdgeType.EMPTY,
       owner: null,
     };
+    this.isRendered = true;
   }
 
   State(): TileEdgeState {

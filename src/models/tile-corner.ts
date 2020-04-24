@@ -29,6 +29,7 @@ export class TileCorner {
       cornerType: TileCornerType.EMPTY,
       owner: null,
     };
+    this.isRendered = true;
   }
 
   public getEdgeWith(cornerB: TileCorner) : TileEdge {

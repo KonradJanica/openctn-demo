@@ -1,27 +1,54 @@
 import * as React from "react";
-
 import * as Components from "./components"
-import { IBoard } from "../models/board-interface";
+import { connect } from 'react-redux';
+import { SetBoard } from '../redux/actions'
+import { TileType } from "../models/tile";
+import { Shuffle } from "../util/shuffle";
+import { DockType } from "../models/dock";
 
-type BoardSmallProps = {
-  board: IBoard
-}
-type BoardSmallState = BoardSmallProps
-
-export default class BoardSmall extends React.Component<BoardSmallProps, BoardSmallState> {
+export class BoardSmall extends React.Component<any> {
   static readonly AmountTiles = 19;
 
   constructor(props) {
-    super(props)
-    this.state = {
-      board: props.board,
-    };
+    super(props) 
+
+    const TILE_TYPE_AMOUNT_BRICK = 3;
+    const TILE_TYPE_AMOUNT_DESERT = 1;
+    const TILE_TYPE_AMOUNT_GRAIN = 4;
+    const TILE_TYPE_AMOUNT_LUMBER = 4;
+    const TILE_TYPE_AMOUNT_ORE = 3;
+    const TILE_TYPE_AMOUNT_WOOL = 4;
+    
+    const availableTiles = [
+      ...Array(TILE_TYPE_AMOUNT_BRICK).fill(TileType.BRICK),
+      ...Array(TILE_TYPE_AMOUNT_DESERT).fill(TileType.DESERT),
+      ...Array(TILE_TYPE_AMOUNT_GRAIN).fill(TileType.GRAIN),
+      ...Array(TILE_TYPE_AMOUNT_LUMBER).fill(TileType.LUMBER),
+      ...Array(TILE_TYPE_AMOUNT_ORE).fill(TileType.ORE),
+      ...Array(TILE_TYPE_AMOUNT_WOOL).fill(TileType.WOOL),
+    ];
+    Shuffle(availableTiles);
+
+    const availableDockTypes = [
+      ...Array(4).fill(DockType.ANY),
+      DockType.BRICK,
+      DockType.GRAIN,
+      DockType.LUMBER,
+      DockType.ORE,
+      DockType.WOOL,
+    ];
+    Shuffle(availableDockTypes);
+    
+    this.props.SetBoard({
+      availableTiles: availableTiles,
+      availableDockTypes: availableDockTypes,
+    });
   }
 
   render() {
     return (
       <div className="board">
-        {this.state.board.GetTiles().map((val, i) => {
+        {this.props.tiles.map((val, i) => {
           return <Components.Tile 
             xPos={val.xPos} 
             yPos={val.yPos}
@@ -35,7 +62,7 @@ export default class BoardSmall extends React.Component<BoardSmallProps, BoardSm
             key={i}
           />
         })}
-        {this.state.board.GetWaterTiles().map((val, i) => {
+        {this.props.waterTiles.map((val, i) => {
           return <Components.Tile 
             xPos={val.xPos} 
             yPos={val.yPos}
@@ -49,7 +76,7 @@ export default class BoardSmall extends React.Component<BoardSmallProps, BoardSm
             key={i}
           />
         })}
-        {this.state.board.GetDocks().map((val, i) => {
+        {this.props.docks.map((val, i) => {
           return <Components.Dock 
             xPos={val.xPos} 
             yPos={val.yPos}
@@ -64,3 +91,16 @@ export default class BoardSmall extends React.Component<BoardSmallProps, BoardSm
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    tiles: state.board.tiles,
+    waterTiles: state.board.waterTiles,
+    docks: state.board.docks,
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  { SetBoard }
+)(BoardSmall);

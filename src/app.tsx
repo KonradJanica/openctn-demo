@@ -16,7 +16,7 @@ export class App extends React.Component<any> {
     };
     return (
       <div className="component-app">
-        <Components.BoardSmall board={this.props.game.board} />
+        <Components.BoardSmall />
         <button onClick={() => this.props.AddPlayer("name")}>Add Player</button>
         <button onClick={() => this.props.EndTurn()}>End Turn</button>
         {this.props.game.players.map((val, i) =>
@@ -32,6 +32,7 @@ export class App extends React.Component<any> {
 const mapStateToProps = state => {
   return {
     game: state.game,
+    board: state.board,
   };
 };
 
