@@ -3,6 +3,7 @@ import * as Components from './components/components';
 
 import { connect } from 'react-redux';
 import { AddPlayer, EndTurn } from './redux/actions'
+import Dice from './components/dice';
 
 export class App extends React.Component<any> {
   constructor(props) {
@@ -22,6 +23,7 @@ export class App extends React.Component<any> {
           <button key={i} style={this.props.game.activePlayerIdx == i ? activeStyle : null}>
             {val.id}
           </button>)}
+        <Dice />
       </div>
     );
   }

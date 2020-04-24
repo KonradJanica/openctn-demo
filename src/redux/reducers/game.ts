@@ -1,19 +1,20 @@
-import { END_TURN, ADD_PLAYER } from '../actionTypes'
-import Dice from '../../models/dice';
+import { END_TURN, ADD_PLAYER, SET_DICE } from '../actionTypes'
 import { Player } from '../../models/player';
 import { BoardSmall } from '../../models/models';
 import { IBoard } from '../../models/board-interface';
 
 interface state {
-    dice: Dice,
+    die1: number,
+    die2: number,
     board: IBoard,
     players: Player[],
     activePlayerIdx: number,
 }
 
 const initialState : state = {
-    dice: new Dice(),
     board: new BoardSmall(),
+    die1: 0,
+    die2: 0,
     players: [],
     activePlayerIdx: 0,
 }
@@ -29,6 +30,13 @@ handlers[ADD_PLAYER] = (state: state, action) : state => {
     return {
         ...state,
         players: [...state.players, new Player(action.payload.name)],
+    };
+};
+handlers[SET_DICE] = (state: state, action) : state => {
+    return {
+        ...state,
+        die1: action.payload.die1,
+        die2: action.payload.die2,
     };
 };
 
