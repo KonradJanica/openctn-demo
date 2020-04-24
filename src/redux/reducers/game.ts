@@ -1,12 +1,14 @@
-import { END_TURN, ADD_PLAYER, SET_DICE } from '../actionTypes'
-import { Player } from '../../models/player';
-import { IBoard } from '../../models/board-interface';
+import { END_TURN, ADD_PLAYER, SET_DICE, ADD_CORNER } from '../actionTypes'
+import { Player, PlayerColors } from '../../models/player';
+
+const MAX_PLAYERS = 5;
 
 interface state {
     die1: number,
     die2: number,
     players: Player[],
     activePlayerIdx: number,
+    availableColors: PlayerColors[],
 }
 
 const initialState : state = {
@@ -14,6 +16,13 @@ const initialState : state = {
     die2: 0,
     players: [],
     activePlayerIdx: 0,
+    availableColors: [
+        PlayerColors.BLUE,
+        PlayerColors.GREEN,
+        PlayerColors.ORANGE,
+        PlayerColors.RED,
+        PlayerColors.WHITE,
+    ]
 }
 
 const handlers = {};
@@ -24,9 +33,14 @@ handlers[END_TURN] = (state: state) : state => {
     };
 };
 handlers[ADD_PLAYER] = (state: state, action) : state => {
+    if (state.players.length == MAX_PLAYERS) {
+        return state;
+    }
+    const player = new Player(action.payload.name);
+    player.color = state.availableColors.pop();
     return {
         ...state,
-        players: [...state.players, new Player(action.payload.name)],
+        players: [...state.players, player],
     };
 };
 handlers[SET_DICE] = (state: state, action) : state => {

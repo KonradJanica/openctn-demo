@@ -1,7 +1,8 @@
-import { SET_BOARD } from '../actionTypes'
+import { SET_BOARD, ADD_CORNER } from '../actionTypes'
 import { Tile, Dock, TileCorner, TileEdge } from '../../models/models';
 import { TileParams, LandTile, TilePlacement, LeftToRight, WaterTileBuilder, CoastTileBuilder, TileType } from '../../models/tile';
 import { DockPlacement, DockParams, DockType } from '../../models/dock';
+import { PlayerColors } from '../../models/player';
 
 interface state {
   tiles: Tile[];
@@ -297,6 +298,13 @@ handlers[SET_BOARD] = (state: state, action): state => {
         tiles,
         waterTiles,
         docks,
+    };
+};
+
+handlers[ADD_CORNER] = (state: state, action) : state => {
+    state.tiles[action.payload.tileIdx].corners[action.payload.cornerIdx].color = PlayerColors.BLUE;
+    return {
+        ...state,
     };
 };
 

@@ -1,4 +1,4 @@
-import {Player} from './player'
+import {Player, PlayerColors} from './player'
 import {TileCorner} from './tile-corner';
 
 export enum TileEdgeType {
@@ -21,7 +21,7 @@ export class TileEdge {
   // Render properties.
   public xPos : number;
   public yPos : number;
-  public isRendered: boolean;
+  public color : PlayerColors;
 
   constructor(cornerA: TileCorner, cornerB: TileCorner) {
     this.a = cornerA;
@@ -30,7 +30,7 @@ export class TileEdge {
       edgeType: TileEdgeType.EMPTY,
       owner: null,
     };
-    this.isRendered = true;
+    this.color = PlayerColors.NONE;
   }
 
   State(): TileEdgeState {

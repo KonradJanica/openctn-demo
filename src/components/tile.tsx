@@ -74,38 +74,37 @@ export default class Tile extends React.Component<TileProps> {
       edges = this.props.edgeList;
     }
 
-    return (<div className="tile" style={posStyle}>
+    return (<div onClick={() => this.forceUpdate() /* fix this by reduxing tile-corner */} className="tile" style={posStyle}>
       <img style={imgStyle} src={this.getTileImg()}></img>
       {this.props.rollNum !== 0 ? <img style={rollNumbStyle} src={this.getRollNumImg()}></img> : null}
       {
         corners.map((val, i) => {
-          if (val.isRendered) {
-            return <Components.TileCorner
+          return <Components.TileCorner
             xPos={val.xPos}
             yPos={val.yPos}
             width={Models.TileCorner.Width}
             height={Models.TileCorner.Height}
             tileCornerType={val.State().cornerType}
+            color={val.color}
+            tileIdx={this.props.debugIdx}
             debugIdx={i}
             key={i}
-              />
-          }
+          />
         })
       }
       {
         edges.map((val, i) => {
-          if (val.isRendered) {
-            return <Components.TileEdge
+          return <Components.TileEdge
             xPos={val.xPos}
             yPos={val.yPos}
             width={val.width}
             height={val.height}
             tileEdgeType={val.State().EdgeType}
+            color={val.color}
             index={i}
             debugIdx={i}
             key={i}
-              />
-          }
+          />
         })
       }
       {this.debug()}
