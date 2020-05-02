@@ -1,6 +1,6 @@
 import { SET_BOARD, ADD_CORNER } from '../actionTypes'
 import { Tile, Dock, TileCorner, TileEdge } from '../../models/models';
-import { TileParams, TilePlacement, LeftToRight, WaterTileBuilder, CoastTileBuilder, TileType, CreateLandTile, TileStatics } from '../../models/tile';
+import { TileParams, TilePlacement, LeftToRight, WaterTileBuilder, CoastTileBuilder, TileType, TileStatics, CreateTile } from '../../models/tile';
 import { DockPlacement, DockParams, DockType } from '../../models/dock';
 import { PlayerColors } from '../../models/player';
 import { CreateTileCorner } from '../../models/tile-corner';
@@ -21,18 +21,13 @@ const initialState : state = {
 const handlers = {};
 handlers[SET_BOARD] = (state: state, action): state => {
     const { availableTiles, availableDockTypes } = action.payload;
-    const tilesObjArr = generateTiles(availableTiles);
-    positionTiles(tilesObjArr);
-    positionCorners(tilesObjArr);
-    positionEdges(tilesObjArr);
-    const docks = generateDocks(tilesObjArr, availableDockTypes);
-    const waterTiles = generateWater(tilesObjArr);
-    positionNumbers(tilesObjArr);
-
-    const tiles = [];
-    tilesObjArr.forEach(function(val) {
-        tiles.push(Object.assign({}, val));
-    })
+    const tiles = generateTiles(availableTiles);
+    positionTiles(tiles);
+    positionCorners(tiles);
+    positionEdges(tiles);
+    const docks = generateDocks(tiles, availableDockTypes);
+    const waterTiles = generateWater(tiles);
+    positionNumbers(tiles);
 
     return {
         ...state,
@@ -41,7 +36,7 @@ handlers[SET_BOARD] = (state: state, action): state => {
         docks,
     };
 
-    function generateTiles(availableTiles) : Tile[] {
+    function generateTiles(availableTiles): Tile[] {
         // Hard coded 4v4 map.
         // Tile graph.
         // Edges and corners in a tile are indexed based on the following rules:
@@ -65,118 +60,75 @@ handlers[SET_BOARD] = (state: state, action): state => {
         //         3
         // This makes it a graph which we can traverse and use for enforcing game rules.
         // The description here uses 0 based index system.
+
+        const tileLength = 19;
+        const cornerBuilder = {
+            0: [0, 1, 2, 3, 4, 5],
+            1: [6, 5, 4, 7, 8, 9],
+            2: [2, 10, 11, 12, 13, 3],
+            3: [14, 9, 8, 15, 16, 17],
+            4: [4, 3, 13, 18, 19, 7],
+            5: [11, 20, 21, 22, 23, 12],
+            6: [8, 7, 19, 24, 25, 15],
+            7: [13, 12, 23, 26, 27, 18],
+            8: [16, 15, 25, 28, 29, 30],
+            9: [19, 18, 27, 31, 32, 24],
+            10: [23, 22, 33, 34, 35, 26],
+            11: [25, 24, 32, 36, 37, 28],
+            12: [27, 26, 35, 38, 39, 31],
+            13: [29, 28, 37, 40, 41, 42],
+            14: [32, 31, 39, 43, 44, 36],
+            15: [35, 34, 45, 46, 47, 38],
+            16: [37, 36, 44, 48, 49, 40],
+            17: [39, 38, 47, 50, 51, 43],
+            18: [44, 43, 51, 52, 53, 48],
+        }
+        const edgeBuilder = {
+            0: [0, 1, 2, 3, 4, 5],
+            1: [6, 4, 7, 8, 9, 10],
+            2: [11, 12, 13, 14, 15, 2],
+            3: [16, 15, 17, 18, 19, 20],
+            4: [3, 15, 21, 22, 23, 7],
+            5: [24, 25, 26, 27, 28, 13],
+            6: [8, 23, 29, 30, 31, 17],
+            7: [14, 28, 32, 33, 34, 21],
+            8: [18, 31, 35, 36, 37, 38],
+            9: [22, 34, 39, 40, 41, 29],
+            10: [27, 42, 43, 44, 45, 32],
+            11: [30, 41, 46, 47, 48, 35],
+            12: [33, 45, 49, 50, 51, 46],
+            13: [36, 48, 52, 53, 54, 55],
+            14: [40, 51, 56, 57, 58, 46],
+            15: [44, 59, 60, 61, 62, 49],
+            16: [47, 58, 63, 64, 65, 52],
+            17: [50, 62, 66, 67, 68, 56],
+            18: [57, 68, 69, 70, 71, 63],
+        };
+
         const tiles = [];
-        const tilesPerRow = [1, 2, 3, 2, 3, 2, 3, 2, 1];
-        let tileObjsPerRow = [];
-        tilesPerRow.forEach((numTiles, rowIndex) => {
-            let tilesInRow = [];
-            for (let tileIndex = 0; tileIndex < numTiles; tileIndex++) {
-                let corners: TileCorner[] = [];
-                for (let j = 0; j < 6; j++) {
-                    // If this is the first row, just create all the corners. First row always has 1 hexagon.
-                    if (rowIndex == 0) {
-                        corners.push(CreateTileCorner());
-                    } else {
-                        // 0-th corner.
-                        if (j == 0) {
-                            const prevRowTiles = tileObjsPerRow[rowIndex - 1];
-                            if (prevRowTiles.length < numTiles) {
-                                if (tileIndex == 0) {
-                                    if (rowIndex > 1 && tileObjsPerRow[rowIndex - 2].length == numTiles) {
-                                        corners.push(tileObjsPerRow[rowIndex - 2][tileIndex].corners[4])
-                                    } else {
-                                        corners.push(CreateTileCorner());
-                                    }
-                                } else {
-                                    corners.push(prevRowTiles[tileIndex - 1].corners[2]);
-                                }
-                            } else if (prevRowTiles.length > numTiles) {
-                                corners.push(prevRowTiles[tileIndex].corners[2]);
-                            } else if (prevRowTiles.length == numTiles) {
-                                console.log('Error: this is not a hexagon array.');
-                            }
-                        } else if (j == 1) {
-                            const prevRowTiles = tileObjsPerRow[rowIndex - 1];
-                            if (prevRowTiles.length < numTiles) {
-                                if (tileIndex == numTiles - 1) {
-                                    if (rowIndex > 1 && tileObjsPerRow[rowIndex - 2].length == numTiles) {
-                                        corners.push(tileObjsPerRow[rowIndex - 2][tileIndex].corners[3])
-                                    } else {
-                                        corners.push(CreateTileCorner());
-                                    }
-                                } else {
-                                    corners.push(prevRowTiles[tileIndex].corners[5]);
-                                }
-                            } else if (prevRowTiles.length > numTiles) {
-                                corners.push(prevRowTiles[tileIndex + 1].corners[5]);
-                            } else if (prevRowTiles.length == numTiles) {
-                                console.log('Error: this is not a hexagon array.');
-                            }
-                        } else if (j == 2) {
-                            const prevRowTiles = tileObjsPerRow[rowIndex - 1];
-                            if (prevRowTiles.length < numTiles) {
-                                if (tileIndex == numTiles - 1) {
-                                    corners.push(CreateTileCorner());
-                                } else {
-                                    corners.push(prevRowTiles[tileIndex].corners[4]);
-                                }
-                            } else if (prevRowTiles.length > numTiles) {
-                                corners.push(prevRowTiles[tileIndex + 1].corners[4]);
-                            } else if (prevRowTiles.length == numTiles) {
-                                console.log('Error: this is not a hexagon array.');
-                            }
-                        } else if (j == 5) {
-                            const prevRowTiles = tileObjsPerRow[rowIndex - 1];
-                            if (prevRowTiles.length < numTiles) {
-                                if (tileIndex == 0) {
-                                    corners.push(CreateTileCorner());
-                                } else {
-                                    corners.push(prevRowTiles[tileIndex - 1].corners[3]);
-                                }
-                            } else if (prevRowTiles.length > numTiles) {
-                                corners.push(prevRowTiles[tileIndex].corners[3]);
-                            } else if (prevRowTiles.length == numTiles) {
-                                console.log('Error: this is not a hexagon array.');
-                            }
-                        } else {
-                            corners.push(CreateTileCorner());
-                        }
-                    }
+        const corners = [];
+        const edges = [];
+        for (let tileIdx = 0; tileIdx < tileLength; ++tileIdx) {
+            cornerBuilder[tileIdx].forEach(function(cornerId) {
+                if (corners.length <= cornerId) {
+                    corners.push(CreateTileCorner({ tileIdx, cornerId }))
                 }
-                console.assert(corners.length == 6, 'Bug, 6 corners per tile.');
-
-                const params: TileParams = {
-                    tileType: availableTiles.pop(),
-                    tilePlacement: TilePlacement.INLAND,
-                    cornerList: corners,
-                    edgeList: []
+            });
+            edgeBuilder[tileIdx].forEach(function(edgeId, i) {
+                if (edges.length <= edgeId) {
+                    const cornerA = corners[tileIdx][i];
+                    const cornerB = corners[tileIdx][(i + 1) % 6]
+                    edges.push(CreateTileEdge({ cornerA, cornerB, tileIdx, edgeId }))
                 }
-                const newTile = CreateLandTile(params);
-                tiles.push(newTile);
-                tilesInRow.push(newTile);
+            });
+            const tileParams : TileParams = {
+                tileType: availableTiles.pop(),
+                tilePlacement: TilePlacement.INLAND,
+                cornerList: cornerBuilder[tileIdx].map((val) => corners[val]),
+                edgeList: edgeBuilder[tileIdx].map((val) => edges[val]),
             }
-            tileObjsPerRow.push(tilesInRow);
-        });
-
-        let edges: TileEdge[] = [];
-        // Now that we have tiles with corners, stich the corners to get edges.
-        tiles.forEach((tile, i) => {
-            for (let i = 0; i < 6; i++) {
-                let cornerA = tile.corners[i];
-                let cornerB = tile.corners[(i + 1) % 6];
-                if (cornerA.getEdgeWith(cornerB) == null) {
-                    let newEdge = CreateTileEdge(cornerA, cornerB);
-                    cornerA.edges.push(newEdge);
-                    cornerB.edges.push(newEdge);
-                    tile.edges.push(newEdge);
-                    console.assert(cornerA.getEdgeWith(cornerB) == newEdge, 'Could not add edge!');
-                } else {
-                    tile.edges.push(cornerA.getEdgeWith(cornerB));
-                }
-            }
-            console.assert(tile.edges.length == 6, 'Bug, 6 edges for each tile.');
-        });
-
+            tiles.push(CreateTile(tileParams))
+        }
         return tiles;
     }
 
@@ -307,7 +259,12 @@ handlers[SET_BOARD] = (state: state, action): state => {
 };
 
 handlers[ADD_CORNER] = (state: state, action) : state => {
-    state.tiles[action.payload.tileIdx].corners[action.payload.cornerIdx].color = PlayerColors.BLUE;
+    state.tiles[action.payload.tileIdx].corners.some(function(val) {
+        if (val.cornerId === action.payload.cornerId) {
+            val.color = PlayerColors.BLUE;
+            return true;
+        }
+    });
     return {
         ...state,
     };

@@ -248,8 +248,8 @@ export function CreateTile(params: TileParams) : Tile {
   return {
     // Game properties.
     tileType: params.tileType,
-    corners: [],
-    edges: [],
+    corners: params.cornerList,
+    edges: params.edgeList,
 
     // Render properties.
     height: TileStatics.Height,
@@ -260,14 +260,6 @@ export function CreateTile(params: TileParams) : Tile {
     rollNum: 0,
   };
 }
-
-export function CreateLandTile(params: TileParams) : Tile {
-  return {
-    ...CreateTile(params),
-    corners: params.cornerList,
-    edges: params.edgeList,
-  };
-};
 
 export function CreateWaterTile(xPos: number, yPos: number) : Tile {
   const params: TileParams = {

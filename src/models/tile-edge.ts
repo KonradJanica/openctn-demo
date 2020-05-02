@@ -22,16 +22,24 @@ export type TileEdge = {
   xPos : number;
   yPos : number;
   color : PlayerColors;
+  tileIdx : number;
+  edgeId : number;
 
   readonly State: () => TileEdgeState;
 };
 
+export type TileEdgeParams = {
+  cornerA : TileCorner,
+  cornerB : TileCorner,
+  tileIdx : number;
+  edgeId : number;
+}
 
-export function CreateTileEdge(cornerA: TileCorner, cornerB: TileCorner) : TileEdge {
+export function CreateTileEdge(params: TileEdgeParams) : TileEdge {
   const te = {
     // Game properties.
-    a: cornerA,
-    b: cornerB,
+    a: params.cornerA,
+    b: params.cornerB,
     edgeState: {
       edgeType: TileEdgeType.EMPTY,
       owner: null,
@@ -41,6 +49,8 @@ export function CreateTileEdge(cornerA: TileCorner, cornerB: TileCorner) : TileE
     xPos: 0,
     yPos: 0,
     color: PlayerColors.NONE,
+    tileIdx: params.tileIdx,
+    edgeId: params.edgeId,
   };
 
   return {

@@ -27,17 +27,18 @@ export class TileCorner extends React.Component<any> {
     if (!Config.IsDebug) return null;
     const posStyle : React.CSSProperties = {
       position: 'absolute',
-      top: this.props.debugIdx * 5,
+      top: 20,
       left: 0,
       width: 100,
+      fontSize: 25,
     };
-    return (<div style={posStyle}>{`${this.props.tileIdx}-${this.props.debugIdx}`}</div>);
+    return (<div className='debug' style={posStyle}>{`${this.props.tileIdx}-${this.props.cornerId}`}</div>);
   }
 
   hitboxClick() {
     this.props.AddCorner({
       tileIdx: this.props.tileIdx,
-      cornerIdx: this.props.debugIdx,
+      cornerId: this.props.cornerId,
     });
   }
 
@@ -63,7 +64,7 @@ export class TileCorner extends React.Component<any> {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    ...state.board.tiles[ownProps.tileIdx].corners[ownProps.debugIdx],
+    ...state.board.tiles[ownProps.tileIdx].corners.find(el => el.cornerId === ownProps.cornerId),
   };
 };
 

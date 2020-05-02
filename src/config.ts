@@ -1,3 +1,3 @@
 export default class Config {
-    static readonly IsDebug = true;
+    static readonly IsDebug = false;
 }

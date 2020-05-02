@@ -8,6 +8,7 @@
     z-index: 10000;
     font-size: 50px;
     -webkit-text-stroke: 3px black;
+    position: absolute;
 }
 
 .debug-small {

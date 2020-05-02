@@ -26,12 +26,19 @@ export type TileCorner = {
   xPos : number;
   yPos : number;
   color : PlayerColors;
+  tileIdx : number;
+  cornerId : number;
 
   readonly getEdgeWith: (cornerB: TileCorner) => TileEdge;
   readonly State: () => TileCornerState;
 }
 
-export function CreateTileCorner() : TileCorner {
+export type TileCornerParams = {
+  tileIdx : number;
+  cornerId : number;
+}
+
+export function CreateTileCorner(params: TileCornerParams) : TileCorner {
   const tc = {
     cornerState: {
       cornerType: TileCornerType.EMPTY,
@@ -42,6 +49,8 @@ export function CreateTileCorner() : TileCorner {
     xPos: 0,
     yPos: 0,
     color: PlayerColors.NONE,
+    tileIdx: params.tileIdx,
+    cornerId: params.cornerId,
   };
 
   return {

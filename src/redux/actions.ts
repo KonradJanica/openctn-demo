@@ -29,6 +29,6 @@ export const AddCorner = (content) => ({
     type: ADD_CORNER,
     payload: {
         tileIdx: content.tileIdx,
-        cornerIdx: content.cornerIdx,
+        cornerId: content.cornerId,
     },
 })

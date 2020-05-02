@@ -66,25 +66,32 @@ export default class Tile extends React.Component<TileProps> {
       <img style={imgStyle} src={this.getTileImg()}></img>
       {this.props.rollNum !== 0 ? <img style={rollNumbStyle} src={this.getRollNumImg()}></img> : null}
       {
-        this.props.cornerList.map((val, i) => {
-          return <Components.TileCorner
-            tileIdx={this.props.debugIdx}
-            debugIdx={i}
-            key={i}
-          />
+        this.props.cornerList?.map((val, i) => {
+          return val.tileIdx === this.props.debugIdx ?
+            <Components.TileCorner
+              xPos={val.xPos}
+              yPos={val.yPos}
+              color={val.color}
+              tileIdx={val.tileIdx}
+              cornerId={val.cornerId}
+              key={i}
+            />
+            : null
         })
       }
       {
-        this.props.edgeList.map((val, i) => {
-          return <Components.TileEdge
-            xPos={val.xPos}
-            yPos={val.yPos}
-            tileEdgeType={val.State().edgeType}
-            color={val.color}
-            index={i}
-            debugIdx={i}
-            key={i}
-          />
+        this.props.edgeList?.map((val, i) => {
+          return val.tileIdx === this.props.debugIdx ?
+            <Components.TileEdge
+              xPos={val.xPos}
+              yPos={val.yPos}
+              tileEdgeType={val.State().edgeType}
+              color={val.color}
+              index={i}
+              debugIdx={i}
+              key={i}
+            />
+            : null
         })
       }
       {this.debug()}
