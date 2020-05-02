@@ -1,4 +1,4 @@
-import {Tile} from "./tile";
+import {Tile, TileStatics} from "./tile";
 
 export enum DockPlacement {
   TOP_CENTER = "COVE_top_center",
@@ -46,37 +46,37 @@ export default class Dock {
         switch(dp.dockPlacement) {
             case DockPlacement.TOP_CENTER:
                 this.xPos = dp.tileXPos;
-                this.yPos = dp.tileYPos - Tile.Height / 2 - Dock.VerticalBeachBuffer; 
+                this.yPos = dp.tileYPos - TileStatics.Height / 2 - Dock.VerticalBeachBuffer; 
                 this.width = 106;
                 this.height = 37;
                 break;
             case DockPlacement.TOP_RIGHT:
-                this.xPos = dp.tileXPos + Tile.Width / 2 + Dock.DiagonalBeachBuffer;
-                this.yPos = dp.tileYPos - Tile.Height / 4 - Dock.DiagonalBeachBuffer; 
+                this.xPos = dp.tileXPos + TileStatics.Width / 2 + Dock.DiagonalBeachBuffer;
+                this.yPos = dp.tileYPos - TileStatics.Height / 4 - Dock.DiagonalBeachBuffer; 
                 this.width = 89;
                 this.height = 87;
                 break;
             case DockPlacement.BOTTOM_RIGHT:
-                this.xPos = dp.tileXPos + Tile.Width / 2 + Dock.DiagonalBeachBuffer;
-                this.yPos = dp.tileYPos + Tile.Height / 4 + Dock.DiagonalBeachBuffer; 
+                this.xPos = dp.tileXPos + TileStatics.Width / 2 + Dock.DiagonalBeachBuffer;
+                this.yPos = dp.tileYPos + TileStatics.Height / 4 + Dock.DiagonalBeachBuffer; 
                 this.width = 86;
                 this.height = 93;
                 break;
             case DockPlacement.BOTTOM_CENTER:
                 this.xPos = dp.tileXPos;
-                this.yPos = dp.tileYPos + Tile.Height / 2 + Dock.VerticalBeachBuffer; 
+                this.yPos = dp.tileYPos + TileStatics.Height / 2 + Dock.VerticalBeachBuffer; 
                 this.width = 116;
                 this.height = 43;
                 break;
             case DockPlacement.BOTTOM_LEFT:
-                this.xPos = dp.tileXPos - Tile.Width / 2 - Dock.DiagonalBeachBuffer;
-                this.yPos = dp.tileYPos + Tile.Height / 4 + Dock.DiagonalBeachBuffer; 
+                this.xPos = dp.tileXPos - TileStatics.Width / 2 - Dock.DiagonalBeachBuffer;
+                this.yPos = dp.tileYPos + TileStatics.Height / 4 + Dock.DiagonalBeachBuffer; 
                 this.width = 86;
                 this.height = 93;
                 break;
             case DockPlacement.TOP_LEFT:
-                this.xPos = dp.tileXPos - Tile.Width / 2 - Dock.DiagonalBeachBuffer;
-                this.yPos = dp.tileYPos - Tile.Height / 4 - Dock.DiagonalBeachBuffer; 
+                this.xPos = dp.tileXPos - TileStatics.Width / 2 - Dock.DiagonalBeachBuffer;
+                this.yPos = dp.tileYPos - TileStatics.Height / 4 - Dock.DiagonalBeachBuffer; 
                 this.width = 89;
                 this.height = 87;
                 break;

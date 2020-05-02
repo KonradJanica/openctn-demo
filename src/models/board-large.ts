@@ -1,5 +1,5 @@
 import {IBoard} from './board-interface';
-import {Tile} from './tile'
+import {Tile, CreateTile} from './tile'
 
 export class BoardLarge implements IBoard {
   static readonly AmountTiles = 30;
@@ -7,7 +7,7 @@ export class BoardLarge implements IBoard {
   private readonly tiles: Tile[];
 
   constructor() {
-    this.tiles = Array(BoardLarge.AmountTiles).fill(new Tile(null));
+    this.tiles = Array(BoardLarge.AmountTiles).fill(CreateTile(null));
   }
 
   /** @implements */

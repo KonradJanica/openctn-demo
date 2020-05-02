@@ -1,4 +1,4 @@
-import { Tile, WaterTile } from './tile';
+import { Tile } from './tile';
 import { Dock } from './models';
 
 export interface IBoard {

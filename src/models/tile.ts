@@ -58,16 +58,16 @@ export function LeftToRight(t: TilePlacement) : TilePlacement {
 }
 
 export function WaterTileBuilder(t: Tile) : Tile[] {
-  var topCenter = new WaterTile(t.xPos, t.yPos - Tile.Height - 3)
-  var topCenterLeft = new WaterTile(t.xPos - 2, t.yPos - Tile.Height - 3)
-  var topCenterRight = new WaterTile(t.xPos + 2, t.yPos - Tile.Height - 3)
-  var topLeft = new WaterTile(t.xPos - Tile.Width * 0.75 - 4, t.yPos - Tile.Height / 2)
-  var topRight = new WaterTile(t.xPos + Tile.Width * 0.75 + 4, t.yPos - Tile.Height / 2 - 1)
-  var bottomCenter = new WaterTile(t.xPos, t.yPos + Tile.Height + 3)
-  var bottomCenterLeft = new WaterTile(t.xPos - 2, t.yPos + Tile.Height + 3)
-  var bottomCenterRight = new WaterTile(t.xPos + 2, t.yPos + Tile.Height + 3)
-  var bottomLeft = new WaterTile(t.xPos - Tile.Width * 0.75 - 3, t.yPos + Tile.Height / 2 + 2)
-  var bottomRight = new WaterTile(t.xPos + Tile.Width * 0.75 + 3, t.yPos + Tile.Height / 2 + 1)
+  var topCenter = CreateWaterTile(t.xPos, t.yPos - TileStatics.Height - 3)
+  var topCenterLeft = CreateWaterTile(t.xPos - 2, t.yPos - TileStatics.Height - 3)
+  var topCenterRight = CreateWaterTile(t.xPos + 2, t.yPos - TileStatics.Height - 3)
+  var topLeft = CreateWaterTile(t.xPos - TileStatics.Width * 0.75 - 4, t.yPos - TileStatics.Height / 2)
+  var topRight = CreateWaterTile(t.xPos + TileStatics.Width * 0.75 + 4, t.yPos - TileStatics.Height / 2 - 1)
+  var bottomCenter = CreateWaterTile(t.xPos, t.yPos + TileStatics.Height + 3)
+  var bottomCenterLeft = CreateWaterTile(t.xPos - 2, t.yPos + TileStatics.Height + 3)
+  var bottomCenterRight = CreateWaterTile(t.xPos + 2, t.yPos + TileStatics.Height + 3)
+  var bottomLeft = CreateWaterTile(t.xPos - TileStatics.Width * 0.75 - 3, t.yPos + TileStatics.Height / 2 + 2)
+  var bottomRight = CreateWaterTile(t.xPos + TileStatics.Width * 0.75 + 3, t.yPos + TileStatics.Height / 2 + 1)
 
   const res = [];
   switch(t.tilePlacement) {
@@ -130,17 +130,17 @@ export function WaterTileBuilder(t: Tile) : Tile[] {
 }
 
 export function CoastTileBuilder(t: Tile) : Tile[] {
-  var topCenter =  new CoastTile(t.xPos + Tile.Width / 4 + 1, t.yPos - Tile.Height / 4, 
+  var topCenter =  CreateCoastTile(t.xPos + TileStatics.Width / 4 + 1, t.yPos - TileStatics.Height / 4, 
                                  TileType.COAST_TOP_CENTER)
-  var topLeft = new CoastTile(t.xPos - 20, t.yPos - 1, 
+  var topLeft = CreateCoastTile(t.xPos - 20, t.yPos - 1, 
                               TileType.COAST_TOP_LEFT)
-  var topRight = new CoastTile(t.xPos + Tile.Width * 0.75 + 1, t.yPos, 
+  var topRight = CreateCoastTile(t.xPos + TileStatics.Width * 0.75 + 1, t.yPos, 
                                TileType.COAST_TOP_RIGHT)
-  var bottomCenter =  new CoastTile(t.xPos + Tile.Width / 4, t.yPos + Tile.Height + 3, 
+  var bottomCenter =  CreateCoastTile(t.xPos + TileStatics.Width / 4, t.yPos + TileStatics.Height + 3, 
                                  TileType.COAST_BOTTOM_CENTER)
-  var bottomLeft = new CoastTile(t.xPos - 19, t.yPos + Tile.Height / 2 + 2, 
+  var bottomLeft = CreateCoastTile(t.xPos - 19, t.yPos + TileStatics.Height / 2 + 2, 
                               TileType.COAST_BOTTOM_LEFT)
-  var bottomRight = new CoastTile(t.xPos + Tile.Width * 0.75, t.yPos + Tile.Height / 2 + 2, 
+  var bottomRight = CreateCoastTile(t.xPos + TileStatics.Width * 0.75, t.yPos + TileStatics.Height / 2 + 2, 
                                TileType.COAST_BOTTOM_RIGHT)
 
   const res = [];
@@ -222,93 +222,110 @@ export interface TileParams {
   edgeList: TileEdge[];
 }
 
-export class Tile {
-  static readonly Height = 158;
-  static readonly Width = 188;
-  static readonly RollNumHeight = 54;
-  static readonly RollNumWidth = 54;
+export const TileStatics = {
+  Height: 158,
+  Width: 188,
+  RollNumHeight: 54,
+  RollNumWidth: 54,
+};
 
+export type Tile = {
   // Game properties.
   readonly tileType : TileType;
   corners: TileCorner[];
   edges: TileEdge[];
 
   // Render properties.
-  public height : number;
-  public width : number;
-  public xPos : number;
-  public yPos : number;
-  public tilePlacement : TilePlacement;
-  public rollNum : number;
+  height : number;
+  width : number;
+  xPos : number;
+  yPos : number;
+  tilePlacement : TilePlacement;
+  rollNum : number;
+};
 
-  constructor(params: TileParams) {
-    this.tileType = params.tileType;
-    this.tilePlacement = params.tilePlacement;
-    this.height = Tile.Height
-    this.width = Tile.Width
-  }
+export function CreateTile(params: TileParams) : Tile {
+  return {
+    // Game properties.
+    tileType: params.tileType,
+    corners: [],
+    edges: [],
+
+    // Render properties.
+    height: TileStatics.Height,
+    width: TileStatics.Width,
+    xPos: 0,
+    yPos: 0,
+    tilePlacement: params.tilePlacement,
+    rollNum: 0,
+  };
 }
 
-export class LandTile extends Tile{
-  constructor(params: TileParams) {
-    super(params)
-    this.corners = params.cornerList;
-    this.edges = params.edgeList;
-  }
+export function CreateLandTile(params: TileParams) : Tile {
+  return {
+    ...CreateTile(params),
+    corners: params.cornerList,
+    edges: params.edgeList,
+  };
 };
 
-export class WaterTile extends Tile {
-  constructor(xPos: number, yPos: number) {
-    const params: TileParams = {
-      tileType: TileType.WATER,
-      tilePlacement: TilePlacement.WATER,
-      cornerList: null,
-      edgeList: null,
-    }
-    super(params)
-    this.xPos = xPos;
-    this.yPos = yPos;
+export function CreateWaterTile(xPos: number, yPos: number) : Tile {
+  const params: TileParams = {
+    tileType: TileType.WATER,
+    tilePlacement: TilePlacement.WATER,
+    cornerList: null,
+    edgeList: null,
   }
+    
+  return {
+    ...CreateTile(params),
+    xPos,
+    yPos,
+  };
 };
 
-export class CoastTile extends Tile {
-  constructor(xPos: number, yPos: number, tileType: TileType) {
-    const params: TileParams = {
-      tileType: tileType,
-      tilePlacement: TilePlacement.WATER,
-      cornerList: null,
-      edgeList: null,
-    }
-    super(params)
-    this.xPos = xPos;
-    this.yPos = yPos;
-
-    switch(tileType) {
-        case TileType.COAST_BOTTOM_CENTER:
-          this.height = 37
-          this.width = 93
-          break;
-        case TileType.COAST_BOTTOM_LEFT:
-          this.height = 78
-          this.width = 65
-          break;
-        case TileType.COAST_BOTTOM_RIGHT:
-          this.height = 79
-          this.width = 66
-          break;
-        case TileType.COAST_TOP_CENTER:
-          this.height = 37
-          this.width = 92
-          break;
-        case TileType.COAST_TOP_LEFT:
-          this.height = 79
-          this.width = 65
-          break;
-        case TileType.COAST_TOP_RIGHT:
-          this.height = 77
-          this.width = 67
-          break;
-            
-    }
+export function CreateCoastTile(xPos: number, yPos: number, tileType: TileType) : Tile {
+  const params: TileParams = {
+    tileType: tileType,
+    tilePlacement: TilePlacement.WATER,
+    cornerList: null,
+    edgeList: null,
   }
+
+  let height;
+  let width;
+  switch (tileType) {
+    case TileType.COAST_BOTTOM_CENTER:
+      height = 37
+      width = 93
+      break;
+    case TileType.COAST_BOTTOM_LEFT:
+      height = 78
+      width = 65
+      break;
+    case TileType.COAST_BOTTOM_RIGHT:
+      height = 79
+      width = 66
+      break;
+    case TileType.COAST_TOP_CENTER:
+      height = 37
+      width = 92
+      break;
+    case TileType.COAST_TOP_LEFT:
+      height = 79
+      width = 65
+      break;
+    case TileType.COAST_TOP_RIGHT:
+      height = 77
+      width = 67
+      break;
+  }
+
+  return {
+    ...CreateTile(params),
+    xPos,
+    yPos,
+    height,
+    width,
+    };
 };

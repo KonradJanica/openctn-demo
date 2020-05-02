@@ -3,8 +3,8 @@ import * as Models from '../models/models'
 import * as Components from "./components"
 
 import Config from '../config';
-import { TileType } from '../models/tile'
-import { TileCorner } from '../models/tile-corner';
+import { TileType, TileStatics } from '../models/tile'
+import { TileCorner, TileCornerStatics } from '../models/tile-corner';
 import { TileEdge } from '../models/tile-edge';
 
 type TileProps = {
@@ -35,14 +35,11 @@ export default class Tile extends React.Component<TileProps> {
         this.props.tileType.toLowerCase().includes("coast")) return null;
     const debugStyle : React.CSSProperties = {
       position: 'absolute',
-      top: Models.Tile.Height / 4,
-      left: Models.Tile.Width / 4,
+      top: TileStatics.Height / 4,
+      left: TileStatics.Width / 4,
     };
     return (<div style={debugStyle}>
         <div className="debug">{this.props.debugIdx}</div>
-      <div className="debug-small">
-        {`corners:${this.props.cornerList.length}, edges:${this.props.edgeList.length}`}
-      </div>
     </div>)
   }
 
@@ -61,31 +58,16 @@ export default class Tile extends React.Component<TileProps> {
     const rollNumbStyle : React.CSSProperties = {
       position: 'absolute',
       zIndex: 100,
-      top: this.props.height / 2 - Models.Tile.RollNumHeight / 2,
-      left: this.props.width / 2 - Models.Tile.RollNumWidth / 2,
+      top: this.props.height / 2 - TileStatics.RollNumHeight / 2,
+      left: this.props.width / 2 - TileStatics.RollNumWidth / 2,
     };
-    let corners = [];
-    if (this.props.cornerList != undefined) {
-      corners = this.props.cornerList;
-    }
 
-    let edges = [];
-    if (this.props.edgeList != undefined) {
-      edges = this.props.edgeList;
-    }
-
-    return (<div onClick={() => this.forceUpdate() /* fix this by reduxing tile-corner */} className="tile" style={posStyle}>
+    return (<div className="tile" style={posStyle}>
       <img style={imgStyle} src={this.getTileImg()}></img>
       {this.props.rollNum !== 0 ? <img style={rollNumbStyle} src={this.getRollNumImg()}></img> : null}
       {
-        corners.map((val, i) => {
+        this.props.cornerList.map((val, i) => {
           return <Components.TileCorner
-            xPos={val.xPos}
-            yPos={val.yPos}
-            width={Models.TileCorner.Width}
-            height={Models.TileCorner.Height}
-            tileCornerType={val.State().cornerType}
-            color={val.color}
             tileIdx={this.props.debugIdx}
             debugIdx={i}
             key={i}
@@ -93,13 +75,11 @@ export default class Tile extends React.Component<TileProps> {
         })
       }
       {
-        edges.map((val, i) => {
+        this.props.edgeList.map((val, i) => {
           return <Components.TileEdge
             xPos={val.xPos}
             yPos={val.yPos}
-            width={val.width}
-            height={val.height}
-            tileEdgeType={val.State().EdgeType}
+            tileEdgeType={val.State().edgeType}
             color={val.color}
             index={i}
             debugIdx={i}

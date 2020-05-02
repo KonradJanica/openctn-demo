@@ -9,8 +9,6 @@ import { PlayerColors } from '../models/player';
 
 type TileEdgeProps = {
   tileEdgeType: TileEdgeType,
-  height: number,
-  width: number,
   xPos: number,
   yPos: number,
   color: PlayerColors,

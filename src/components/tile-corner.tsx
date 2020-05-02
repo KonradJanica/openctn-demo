@@ -1,14 +1,12 @@
 import * as React from 'react';
 
-import { TileCornerType } from '../models/tile-corner';
+import { TileCornerStatics } from '../models/tile-corner';
 import { PlayerColors } from '../models/player';
 import { connect } from 'react-redux';
 import { AddCorner } from '../redux/actions'
+import Config from '../config';
 
 type TileCornerProps = {
-  tileCornerType: TileCornerType,
-  height: number,
-  width: number,
   xPos: number,
   yPos: number,
   color: PlayerColors,
@@ -26,7 +24,14 @@ export class TileCorner extends React.Component<any> {
   }
 
   debug() {
-    return null;
+    if (!Config.IsDebug) return null;
+    const posStyle : React.CSSProperties = {
+      position: 'absolute',
+      top: this.props.debugIdx * 5,
+      left: 0,
+      width: 100,
+    };
+    return (<div style={posStyle}>{`${this.props.tileIdx}-${this.props.debugIdx}`}</div>);
   }
 
   hitboxClick() {
@@ -34,7 +39,6 @@ export class TileCorner extends React.Component<any> {
       tileIdx: this.props.tileIdx,
       cornerIdx: this.props.debugIdx,
     });
-    this.forceUpdate(); // fix this by reduxing tile-corner.ts
   }
 
   render() {
@@ -46,8 +50,8 @@ export class TileCorner extends React.Component<any> {
     };
     const imgStyle : React.CSSProperties = {
       position: 'absolute',
-      height: this.props.width,
-      width: this.props.height,
+      height: TileCornerStatics.Width,
+      width: TileCornerStatics.Height,
     };
     return (<div className="tile-corner" style={posStyle}>
       <div style={imgStyle} className="tile-corner-hitbox" onClick={() => this.hitboxClick()}></div>
@@ -57,9 +61,9 @@ export class TileCorner extends React.Component<any> {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, ownProps) => {
   return {
-    // Add later
+    ...state.board.tiles[ownProps.tileIdx].corners[ownProps.debugIdx],
   };
 };
 
