@@ -116,9 +116,13 @@ handlers[SET_BOARD] = (state: state, action): state => {
             });
             edgeBuilder[tileIdx].forEach(function(edgeId, i) {
                 if (edges.length <= edgeId) {
-                    const cornerA = corners[tileIdx][i];
-                    const cornerB = corners[tileIdx][(i + 1) % 6]
-                    edges.push(CreateTileEdge({ cornerA, cornerB, tileIdx, edgeId }))
+                    const cornerA = corners[cornerBuilder[tileIdx][i]];
+                    const cornerB = corners[cornerBuilder[tileIdx][(i + 1) % 6]];
+                    const newEdge = CreateTileEdge({ cornerA, cornerB, tileIdx, edgeId });
+                    edges.push(newEdge);
+                    cornerA.edges.push(newEdge);
+                    cornerB.edges.push(newEdge);
+                    console.assert(cornerA.getEdgeWith(cornerB) == newEdge, 'Could not add edge!');
                 }
             });
             const tileParams : TileParams = {
