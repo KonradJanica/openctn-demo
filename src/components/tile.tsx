@@ -85,10 +85,10 @@ export default class Tile extends React.Component<TileProps> {
             <Components.TileEdge
               xPos={val.xPos}
               yPos={val.yPos}
-              tileEdgeType={val.State().edgeType}
               color={val.color}
+              tileIdx={val.tileIdx}
+              edgeId={val.edgeId}
               index={i}
-              debugIdx={i}
               key={i}
             />
             : null

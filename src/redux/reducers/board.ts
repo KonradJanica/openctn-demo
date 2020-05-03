@@ -1,4 +1,4 @@
-import { SET_BOARD, ADD_CORNER } from '../actionTypes'
+import { SET_BOARD, ADD_CORNER, ADD_EDGE } from '../actionTypes'
 import { Tile, Dock, TileCorner, TileEdge } from '../../models/models';
 import { TileParams, TilePlacement, LeftToRight, WaterTileBuilder, CoastTileBuilder, TileType, TileStatics, CreateTile } from '../../models/tile';
 import { DockPlacement, DockParams, DockType } from '../../models/dock';
@@ -265,6 +265,18 @@ handlers[SET_BOARD] = (state: state, action): state => {
 handlers[ADD_CORNER] = (state: state, action) => {
     state.tiles[action.payload.tileIdx].corners.some(function(val) {
         if (val.cornerId === action.payload.cornerId) {
+            val.color = action.payload.color;
+            return true;
+        }
+    });
+    return {
+        ...state,
+    };
+};
+
+handlers[ADD_EDGE] = (state: state, action) => {
+    state.tiles[action.payload.tileIdx].edges.some(function(val) {
+        if (val.edgeId === action.payload.edgeId) {
             val.color = action.payload.color;
             return true;
         }

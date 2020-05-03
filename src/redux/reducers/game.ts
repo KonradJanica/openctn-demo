@@ -1,4 +1,4 @@
-import { END_TURN, ADD_PLAYER, SET_DICE, ADD_CORNER } from '../actionTypes'
+import { END_TURN, ADD_PLAYER, SET_DICE, ADD_CORNER, ADD_EDGE } from '../actionTypes'
 import { Player, PlayerColors, CreatePlayer } from '../../models/player';
 
 const MAX_PLAYERS = 5;
@@ -62,6 +62,12 @@ handlers[SET_DICE] = (state: state, action) : state => {
 };
 handlers[ADD_CORNER] = (state: state, action) : state => {
     state.players[state.activePlayerIdx].lands.push(action.payload.tileCorner);
+    return {
+        ...state,
+    };
+};
+handlers[ADD_EDGE] = (state: state, action) : state => {
+    state.players[state.activePlayerIdx].roads.push(action.payload.tileEdge);
     return {
         ...state,
     };
