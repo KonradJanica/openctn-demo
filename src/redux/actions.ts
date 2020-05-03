@@ -1,4 +1,4 @@
-import { END_TURN, ADD_PLAYER, SET_DICE, SET_BOARD, ADD_CORNER } from './actionTypes'
+import { END_TURN, ADD_PLAYER, SET_DICE, ADD_CORNER, SET_BOARD } from './actionTypes'
 
 export const EndTurn = () => ({
     type: END_TURN,
@@ -30,5 +30,7 @@ export const AddCorner = (content) => ({
     payload: {
         tileIdx: content.tileIdx,
         cornerId: content.cornerId,
+        color: content.color,
+        tileCorner: content.tileCorner,
     },
 })

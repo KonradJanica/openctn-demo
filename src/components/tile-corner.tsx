@@ -39,6 +39,8 @@ export class TileCorner extends React.Component<any> {
     this.props.AddCorner({
       tileIdx: this.props.tileIdx,
       cornerId: this.props.cornerId,
+      color: this.props.activePlayerColor,
+      tileCorner: this.props.tileCorner,
     });
   }
 
@@ -63,8 +65,11 @@ export class TileCorner extends React.Component<any> {
 }
 
 const mapStateToProps = (state, ownProps) => {
+  const tileCorner = state.board.tiles[ownProps.tileIdx].corners.find(el => el.cornerId === ownProps.cornerId);
   return {
-    ...state.board.tiles[ownProps.tileIdx].corners.find(el => el.cornerId === ownProps.cornerId),
+    tileCorner,
+    color: tileCorner.color,
+    activePlayerColor: state.game.activePlayerColor,
   };
 };
 

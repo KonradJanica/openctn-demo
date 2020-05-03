@@ -11,14 +11,20 @@ export enum PlayerColors {
     NONE = "none",
 };
 
-export class Player {
-  public readonly id: string;
-  public readonly lands: TileCorner [] = [];
-  public readonly developmentCards: DevelopmentCard[] = [];
-  public readonly resources: Resource[] = [];
-  public color: PlayerColors;
-  
-  constructor(id: string) {
-    this.id = id;
-  }
+export type Player = {
+  readonly id: string;
+  readonly lands: TileCorner[];
+  readonly developmentCards: DevelopmentCard[];
+  readonly resources: Resource[];
+  color: PlayerColors;
+};
+
+export function CreatePlayer(id: string) : Player {
+  return {
+    id,
+    lands: [],
+    developmentCards: [],
+    resources: [],
+    color: PlayerColors.NONE,
+  };
 }

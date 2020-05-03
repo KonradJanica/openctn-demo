@@ -262,10 +262,10 @@ handlers[SET_BOARD] = (state: state, action): state => {
     }
 };
 
-handlers[ADD_CORNER] = (state: state, action) : state => {
+handlers[ADD_CORNER] = (state: state, action) => {
     state.tiles[action.payload.tileIdx].corners.some(function(val) {
         if (val.cornerId === action.payload.cornerId) {
-            val.color = PlayerColors.BLUE;
+            val.color = action.payload.color;
             return true;
         }
     });
