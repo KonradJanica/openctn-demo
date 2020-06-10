@@ -15,7 +15,7 @@ The generated ES2015 files will be placed in the `public` directory.
 
 To run, point your browser to `./public/index.html`.
 
-## Demo
+## Demo video
 
 [![Demo](https://img.youtube.com/vi/zuXCogT6Q9Q/maxresdefault.jpg)](https://youtu.be/zuXCogT6Q9Q)
 
